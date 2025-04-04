@@ -103,37 +103,11 @@ char *colorized(char *str, int color) {
   return buffer;
 }
 
-int len(int *arr[]) { sizeof(arr) / sizeof(arr[0]); }
-
-// void print_title(char *title, int width, int end) {
-//   int pad = (width - strlen(title)) / 2;
-
-//   printf("%s ", colorized("+-", YELLOW_COLOR));
-//   printf("%*s%s%*s", pad, "", colorized(title, GREEN_COLOR), pad, "");
-//   printf("%s\n", colorized(" -+", YELLOW_COLOR));
-// }
-
-// void print_space(int *columns[], int buffer) {
-//   printf("%s", colorized("+-", YELLOW_COLOR));
-
-//   for (int i = 0; i < len(columns); i++) {
-//     char val[buffer];
-
-//     printf("%s", colorized("-+"))
-//   }
-
-//   printf("+-%*s-+-%*s-+\n", title_width, gen_str('-', title_width),
-//   value_width,
-//          gen_str('-', value_width));
-// }
-
-// void print_line() {}
-
 void lesson_3() {
   char *title = "Array 001";
 
   char *name_title = "Name";
-  char *name = "David Tsofin";
+  char *name = "David Tsofin asdasdasdasd";
 
   char *height_title = "Height";
   char *height = "175cm";
@@ -152,32 +126,41 @@ void lesson_3() {
 
   int value_width = max_str((char *[]){name, height, phone, weight}, 4);
 
-  int pad = center_pad(title, title_width + value_width + 1);
+  int pad = (title_width + value_width + 1 - strlen(title)) / 2;
 
-  printf("%s ", colorized("+-", YELLOW_COLOR));
-  printf("%*s%s%*s", pad, "", colorized(title, GREEN_COLOR), pad, "");
-  printf("%s\n", colorized(" -+", YELLOW_COLOR));
+  printf(colorized("+- ", YELLOW_COLOR));
+  printf(colorized("%*s%s%*s", GREEN_COLOR), pad, "", title, pad, "");
+  printf(colorized(" -+\n", YELLOW_COLOR));
 
-  printf("%s", colorized("+-", YELLOW_COLOR));
-  printf("%*s", title_width,
-         colorized(gen_str('-', title_width), YELLOW_COLOR));
-  printf("%s", colorized("-+-", YELLOW_COLOR));
-  printf("%*s", value_width,
-         colorized(gen_str('-', value_width), YELLOW_COLOR));
-  printf("%s\n", colorized("-+", YELLOW_COLOR));
+  printf(colorized("+-%*s-+-%*s-+\n", YELLOW_COLOR), title_width,
+         gen_str('-', title_width), value_width, gen_str('-', value_width));
 
-  printf("%s ", colorized("|", YELLOW_COLOR));
-  printf("%-*s", title_width, colorized(name_title, GREEN_COLOR));
-  printf(" %s ", colorized("|", YELLOW_COLOR));
-  printf("%*s", value_width, colorized(name, GREEN_COLOR));
-  printf(" %s\n", colorized("|", YELLOW_COLOR));
+  printf(colorized("| ", YELLOW_COLOR));
+  printf(colorized("%-*s", GREEN_COLOR), title_width, name_title);
+  printf(colorized(" | ", YELLOW_COLOR));
+  printf(colorized("%*s", GREEN_COLOR), value_width, name);
+  printf(colorized(" |\n", YELLOW_COLOR));
 
-  printf("| %-*s | %*s |\n", title_width, height_title, value_width, height);
-  printf("| %-*s | %*s |\n", title_width, wight_title, value_width, weight);
-  printf("| %-*s | %*s |\n", title_width, phone_title, value_width, phone);
+  printf(colorized("| ", YELLOW_COLOR));
+  printf(colorized("%-*s", GREEN_COLOR), title_width, height_title);
+  printf(colorized(" | ", YELLOW_COLOR));
+  printf(colorized("%*s", GREEN_COLOR), value_width, height);
+  printf(colorized(" |\n", YELLOW_COLOR));
 
-  printf("+-%*s-+-%*s-+\n", title_width, gen_str('-', title_width), value_width,
-         gen_str('-', value_width));
+  printf(colorized("| ", YELLOW_COLOR));
+  printf(colorized("%-*s", GREEN_COLOR), title_width, wight_title);
+  printf(colorized(" | ", YELLOW_COLOR));
+  printf(colorized("%*s", GREEN_COLOR), value_width, weight);
+  printf(colorized(" |\n", YELLOW_COLOR));
+
+  printf(colorized("| ", YELLOW_COLOR));
+  printf(colorized("%-*s", GREEN_COLOR), title_width, phone_title);
+  printf(colorized(" | ", YELLOW_COLOR));
+  printf(colorized("%*s", GREEN_COLOR), value_width, phone);
+  printf(colorized(" |\n", YELLOW_COLOR));
+
+  printf(colorized("+-%*s-+-%*s-+\n", YELLOW_COLOR), title_width,
+         gen_str('-', title_width), value_width, gen_str('-', value_width));
 }
 
 int main() {
