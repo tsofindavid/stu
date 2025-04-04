@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "functions.h": "c",
+        "complex": "c",
+        "variant": "c",
+        "chrono": "c",
+        "ranges": "c",
+        "data.h": "c"
+    }
+}
