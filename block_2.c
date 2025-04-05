@@ -25,9 +25,11 @@ void lesson_6() {
     refresh();
     key = getch();
 
+    println("");
+
     switch (key) {
     case KEY_F(1):
-      printf("návod na použitie");
+      println("návod na použitie");
       break;
     case KEY_F(2):
       start_time = clock();
@@ -164,7 +166,7 @@ void lesson_3() {
 }
 
 int main() {
-  // lesson_6();
-  lesson_3();
+  lesson_6();
+  // lesson_3();
   return 0;
 }
