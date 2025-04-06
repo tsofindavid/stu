@@ -1,5 +1,5 @@
 CC = gcc
-# CFLAGS = -Wall -g
+CFLAGS = -Wall -g
 TARGET = z3
 SRC = z3.c 
 

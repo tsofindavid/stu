@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "string.h": "c"
+        "string.h": "c",
+        "__locale": "c",
+        "cctype": "c",
+        "locale": "c",
+        "source_location": "c"
     }
 }
