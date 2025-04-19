@@ -1,71 +1,10 @@
-#include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-
-const int KEY_ESC = 27;
 
 const int GREEN_COLOR = 32;
 const int YELLOW_COLOR = 33;
 
-void lesson_6() {
-  initscr();
-  cbreak();
-  noecho();
-  keypad(stdscr, TRUE);
-
-  int prev_key;
-  int clicked;
-  clock_t start_time;
-
-  int key;
-  int end = 0;
-  while (!end) {
-    refresh();
-    key = getch();
-
-    println("");
-
-    switch (key) {
-    case KEY_F(1):
-      println("návod na použitie");
-      break;
-    case KEY_F(2):
-      start_time = clock();
-      break;
-    case KEY_ESC:
-      end = 1;
-      break;
-    case KEY_F(10):
-      end = 1;
-      break;
-    default:
-      if (!start_time) {
-        break;
-      }
-
-      if (!prev_key) {
-        prev_key = key;
-        break;
-      }
-
-      if (prev_key == key) {
-        clicked = 1;
-        break;
-      }
-
-      if ((prev_key != key) && (clicked = 1)) {
-        clicked = 0;
-        prev_key = key;
-        printf("%f\n", (float)(clock() - start_time));
-      }
-
-      break;
-    }
-  }
-  endwin();
-}
 long max_str(char *arr[], int count) {
   int max = 0;
   for (int i = 0; i < count; i++) {
@@ -105,7 +44,7 @@ char *colorized(char *str, int color) {
   return buffer;
 }
 
-void lesson_3() {
+void ex_5_2() {
   char *title = "Array 001";
 
   char *name_title = "Name";
@@ -128,10 +67,17 @@ void lesson_3() {
 
   int value_width = max_str((char *[]){name, height, phone, weight}, 4);
 
-  int pad = (title_width + value_width + 1 - strlen(title)) / 2;
+  int l_pad = (title_width + value_width + 1 - strlen(title)) / 2;
+
+  int r_pad;
+  if ((title_width + value_width + 1 - strlen(title)) % 2 == 0) {
+    r_pad = l_pad;
+  } else {
+    r_pad = l_pad + 1;
+  }
 
   printf(colorized("+- ", YELLOW_COLOR));
-  printf(colorized("%*s%s%*s", GREEN_COLOR), pad, "", title, pad, "");
+  printf(colorized("%*s%s%*s", GREEN_COLOR), l_pad, "", title, r_pad, "");
   printf(colorized(" -+\n", YELLOW_COLOR));
 
   printf(colorized("+-%*s-+-%*s-+\n", YELLOW_COLOR), title_width,
@@ -166,7 +112,7 @@ void lesson_3() {
 }
 
 int main() {
-  lesson_6();
-  // lesson_3();
+  ex_5_2();
+
   return 0;
 }

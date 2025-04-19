@@ -47,6 +47,9 @@
         "*.ipp": "c",
         "text_encoding": "c",
         "*.tcc": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "stdlib.h": "c",
+        "unistd.h": "c",
+        "__locale": "c"
     }
 }

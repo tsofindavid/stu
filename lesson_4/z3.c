@@ -585,28 +585,10 @@ int cmd_insert_space(int n) {
     result[i + shift] = op[i];
   }
 
-  //   int i = 0;
-  //   int x = 0;
-  //   while (i < op_len) {
-  //     printf("i: %d, c: %c\n", i, op[i]);
-
-  //     result[x] = op[i];
-  //     i++;
-  //     x++;
-
-  //     if (i == sp) {
-  //       for (int d = 0; d < n; d++) {
-  //         printf("x: %d, c: %c\n", x, '*');
-  //         result[x] = '*';
-  //         x++;
-  //       }
-  //     }
-  //   }
-
-  //   printf("i: %d, x: %d, (op_len + n): %d\n", i, x, op_len + n);
-
   result[op_len + n] = '\0';
   strcpy(op, result);
+
+  ep = strlen(op);
 
   return 0;
 }
@@ -622,23 +604,22 @@ int cmd_insert_mem() {
 
   char result[N + 1];
 
-  int i = 0;
-  int x = 0;
-  while (i < op_len) {
-    if (x == sp) {
+  int shift = 0;
+  for (int i = 0; i < op_len + 1; i++) {
+    if (i == sp) {
       for (int d = 0; d < mem_len; d++) {
-        result[x] = mem[d];
-        x++;
+        result[i + shift] = mem[d];
+        shift++;
       }
     }
 
-    result[x] = op[i];
-    i++;
-    x++;
+    result[i + shift] = op[i];
   }
 
   result[op_len + mem_len] = '\0';
   strcpy(op, result);
+
+  ep = strlen(op);
 
   return 0;
 }

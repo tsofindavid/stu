@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "string.h": "c",
+        "__locale": "c",
+        "cctype": "c",
+        "locale": "c",
+        "source_location": "c",
+        "__bit_reference": "c",
+        "bitset": "c",
+        "map": "c",
+        "set": "c",
+        "unordered_map": "c",
+        "unordered_set": "c",
+        "algorithm": "c",
+        "format": "c",
+        "sstream": "c",
+        "strstream": "c",
+        "random": "c"
+    }
+}
