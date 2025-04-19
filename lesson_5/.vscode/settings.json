@@ -15,6 +15,7 @@
         "format": "c",
         "sstream": "c",
         "strstream": "c",
-        "random": "c"
+        "random": "c",
+        "chrono": "c"
     }
 }

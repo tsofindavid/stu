@@ -44,10 +44,9 @@ for z4_test in z4_tests:
         examples.sort(key=lambda x: int(x.split('_')[1].split('.')[0]))
 
         prefix = ""
-
         for p in prefixes:
             if scenario in p['scenarios']:
-                prefix+= p['prefix']
+                prefix+= " " + p['prefix']
 
         for example in examples:
             if skip and skipping:

@@ -1,0 +1,178 @@
+Army 1
+    Unit: 0
+    Name: Johan
+    HP: 100
+    Item 1: wand,12,4,1,4,2
+    Item 2: fireball,11,0,1,3,3
+
+Army 2
+    Unit: 0
+    Name: Simon
+    HP: 100
+    Item 1: dagger,4,0,1,0,0
+    Item 2: gloves,1,4,1,0,0
+
+    Unit: 1
+    Name: Palko
+    HP: 100
+    Item 1: slingshot,2,0,2,2,1
+
+    Unit: 2
+    Name: Jojko
+    HP: 100
+    Item 1: shield,2,6,1,0,0
+
+    Unit: 3
+    Name: Mimko
+    HP: 100
+    Item 1: helmet,1,5,1,0,0
+    Item 2: fireball,11,0,1,3,3
+
+    Unit: 4
+    Name: Duso
+    HP: 100
+    Item 1: rock,3,0,1,2,1
+
+Round 1
+1: Johan,100 
+2: Simon,100  Palko,100  Jojko,100  Mimko,100  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 2
+1: Johan,87 
+2: Simon,85  Palko,77  Jojko,89  Mimko,94  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 3
+1: Johan,74 
+2: Simon,70  Palko,54  Jojko,78  Mimko,88  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 4
+1: Johan,61 
+2: Simon,55  Palko,31  Jojko,67  Mimko,82  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 5
+1: Johan,48 
+2: Simon,40  Palko,8  Jojko,56  Mimko,76  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 6
+1: Johan,35 
+2: Simon,25  Palko,-15  Jojko,45  Mimko,70  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 7
+1: Johan,22 
+2: Simon,10  Palko,-38  Jojko,34  Mimko,64  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 8
+1: Johan,9 
+2: Simon,-5  Palko,-61  Jojko,23  Mimko,58  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 9
+1: Johan,-4 
+2: Simon,-20  Palko,-84  Jojko,12  Mimko,52  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 10
+1: Johan,-17 
+2: Simon,-35  Palko,-107  Jojko,1  Mimko,46  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
+Round 11
+1: Johan,-30 
+2: Simon,-50  Palko,-130  Jojko,-10  Mimko,40  Duso,100 
+1,Johan,wand:        [Simon,8] [Palko,12] [Jojko,6] 
+1,Johan,fireball:    [Simon,7] [Palko,11] [Jojko,5] [Mimko,6] 
+2,Simon,dagger:      [Johan,1] 
+2,Simon,gloves:      [Johan,1] 
+2,Palko,slingshot:   [Johan,1] 
+2,Jojko,shield:      [Johan,1] 
+2,Mimko,helmet:      [Johan,1] 
+2,Mimko,fireball:    [Johan,7] 
+2,Duso,rock:         [Johan,1] 
+
