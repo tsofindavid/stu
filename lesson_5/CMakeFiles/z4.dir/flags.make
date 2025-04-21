@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/Users/David/Documents/own_projects/university/prog_2/lesson_5/include
 
-C_FLAGS = -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk -Wall -Wextra -Wuninitialized -pedantic -g
+C_FLAGS = -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk -Wall -Wextra -Wuninitialized -Wformat-overflow -pedantic -g
 

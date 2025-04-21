@@ -16,6 +16,7 @@
         "sstream": "c",
         "strstream": "c",
         "random": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "data.h": "c"
     }
 }

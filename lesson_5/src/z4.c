@@ -116,17 +116,16 @@ void print_armies(ARMY* armies) {
 
 void print_units(ARMY* armies) {
     char* line;
+    int lineSize = 0;
     for (int a = 0; a < MAX_ARMIES; a++) {
-        line = (char*)malloc((armies[a].num_units + 1) * ((sizeof(char) * MAX_NAME) + 6));
+        lineSize = (armies[a].num_units + 1) * MAX_NAME + 6;
+        line = (char*)calloc(lineSize, sizeof(char));
 
-        sprintf(line + strlen(line), "%d: ", armies[a].index + 1);
+        snprintf(line, lineSize, "%d: ", armies[a].index + 1);
 
         for (int u = 0; u < armies[a].num_units; u++) {
-            if (u != 0) {
-                sprintf(line + strlen(line), " ");
-            }
-
-            sprintf(line + strlen(line), "%s,%d ", armies[a].units[u].name, armies[a].units[u].hp);
+            snprintf(line + strlen(line), lineSize, "%s,%d ", armies[a].units[u].name,
+                     armies[a].units[u].hp);
         }
 
         printf("%s\n", line);
@@ -135,20 +134,20 @@ void print_units(ARMY* armies) {
 
 ARMY army_attack(ARMY from, ARMY to) {
     for (int fu = 0; fu < from.num_units; fu++) {
-        char* line;
-        char* header;
 
-        int headerSize = MAX_NAME * 2 + 3;
+        const int headerSize = MAX_NAME * 2 + 3;
+        int lineSize = headerSize;
 
         if (from.units[fu].item1 != NULL) {
-            line = (char*)malloc(headerSize);
-            header = (char*)malloc(headerSize);
+            char* line = (char*)calloc(lineSize, sizeof(char));
+            char* header = (char*)calloc(lineSize, sizeof(char));
 
-            sprintf(header + strlen(header), "%d,%s,%s:", from.index + 1, from.units[fu].name,
-                    from.units[fu].item1->name);
+            snprintf(header, lineSize, "%d,%s,%s:", from.index + 1, from.units[fu].name,
+                     from.units[fu].item1->name);
 
-            sprintf(line + strlen(line), "%-21s", header);
+            snprintf(line, lineSize, "%-21s", header);
 
+            int attacks = 0;
             for (int tu = 0; tu < to.num_units; tu++) {
                 int def = 0;
                 if (to.units[tu].item1 != NULL) {
@@ -161,30 +160,35 @@ ARMY army_attack(ARMY from, ARMY to) {
 
                 int att = max(1, from.units[fu].item1->att - def);
 
-                if (tu <= from.units[fu].item1->radius) {
+                if (fu <= from.units[fu].item1->range && tu <= from.units[fu].item1->radius) {
                     to.units[tu].hp -= att;
 
-                    line = realloc(line, MAX_NAME + 6);
+                    lineSize += MAX_NAME + 6;
+                    line = realloc(line, lineSize);
 
-                    sprintf(line + strlen(line), "[%s,%d] ", to.units[tu].name, att);
+                    snprintf(line + strlen(line), lineSize, "[%s,%d] ", to.units[tu].name, att);
+                    attacks++;
                 }
             }
 
-            printf("%s\n", line);
+            if (attacks) {
+                printf("%s\n", line);
+            }
 
             free(line);
             free(header);
         }
 
         if (from.units[fu].item2 != NULL) {
-            line = (char*)malloc(headerSize);
-            header = (char*)malloc(headerSize);
+            char* line = (char*)calloc(lineSize, sizeof(char));
+            char* header = (char*)calloc(lineSize, sizeof(char));
 
-            sprintf(header + strlen(header), "%d,%s,%s:", from.index + 1, from.units[fu].name,
-                    from.units[fu].item2->name);
+            snprintf(header, lineSize, "%d,%s,%s:", from.index + 1, from.units[fu].name,
+                     from.units[fu].item2->name);
 
-            sprintf(line + strlen(line), "%-21s", header);
+            snprintf(line, lineSize, "%-21s", header);
 
+            int attacks = 0;
             for (int tu = 0; tu < to.num_units; tu++) {
                 int def = 0;
                 if (to.units[tu].item1 != NULL) {
@@ -197,20 +201,21 @@ ARMY army_attack(ARMY from, ARMY to) {
 
                 int att = max(1, from.units[fu].item2->att - def);
 
-                // printf("%s, att: %d, def: %d\n", from.units[fu].name, att, def);
-                // printf("from.units[fu]: %s\n", from.units[fu].item1->name);
-                // printf("tu <= from.units[fu].item1->radius %d\n",
-                //    tu <= from.units[fu].item1->radius);
-                if (tu <= from.units[fu].item2->radius) {
+                if (fu <= from.units[fu].item2->range && tu <= from.units[fu].item2->radius) {
                     to.units[tu].hp -= att;
 
-                    line = realloc(line, MAX_NAME + 6);
+                    lineSize += MAX_NAME + 6;
+                    line = realloc(line, lineSize);
 
-                    sprintf(line + strlen(line), "[%s,%d] ", to.units[tu].name, att);
+                    snprintf(line + strlen(line), lineSize, "[%s,%d] ", to.units[tu].name, att);
+                    attacks++;
                 }
             }
 
-            printf("%s\n", line);
+            if (attacks) {
+                printf("%s\n", line);
+            }
+
             free(line);
             free(header);
         }
@@ -221,20 +226,20 @@ ARMY army_attack(ARMY from, ARMY to) {
 
 ARMY army_clean(ARMY army) {
     int num_units = 0;
-    UNIT* units;
-    units = (UNIT*)malloc(0);
+    UNIT* units = NULL;
 
     for (int u = 0; u < army.num_units; u++) {
         if (army.units[u].hp > 0) {
-            units = (UNIT*)realloc(units, sizeof(UNIT));
-            units[u] = army.units[u];
-
-            num_units += 1;
+            units = realloc(units, (num_units + 1) * sizeof(UNIT));
+            units[num_units] = army.units[u];
+            num_units++;
         }
     }
 
-    army.num_units = num_units;
+    free(army.units);
+
     army.units = units;
+    army.num_units = num_units;
 
     return army;
 }
@@ -309,9 +314,7 @@ int main(const int argc, char* argv[]) {
 
     int max_rounds = -1;
     if (argc == 2) {
-        if (strncmp(argv[1], "N=", 2) == 0) {
-            max_rounds = atoi(argv[1] + 2);
-        }
+        max_rounds = atoi(argv[1]);
     }
 
     int round = 0;
@@ -320,9 +323,13 @@ int main(const int argc, char* argv[]) {
 
     printf("\n");
 
-    while (!isGameOver(armies)) {
+    while (1) {
         if (max_rounds != -1 && round >= max_rounds) {
             return 0;
+        }
+
+        if (isGameOver(armies)) {
+            break;
         }
 
         printf("Round %d\n", round + 1);
@@ -332,17 +339,13 @@ int main(const int argc, char* argv[]) {
         army_2 = army_attack(armies[0], armies[1]);
         army_1 = army_attack(armies[1], armies[0]);
 
-        // armies[0] = army_clean(army_1);
-        // armies[1] = army_clean(army_2);
+        armies[0] = army_clean(army_1);
+        armies[1] = army_clean(army_2);
 
-        // print_units(armies);
+        print_units(armies);
 
         printf("\n");
         round++;
-
-        if (round > 10) {
-            break;
-        }
     }
 
     return 0;
