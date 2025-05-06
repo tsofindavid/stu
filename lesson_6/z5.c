@@ -124,12 +124,12 @@ int parseInt(char* line, int* value) {
             continue;
         }
 
-        if (isdigit(line[i]) == 1) {
+        if (isdigit(line[i])) {
             strValue[strSize] = line[i];
             strSize++;
         }
 
-        if (isalpha(line[i]) == 1) {
+        if (isalpha(line[i])) {
             fprintf(stderr, "%s\n", ERR_BAD_VALUE);
             return 1;
         }
