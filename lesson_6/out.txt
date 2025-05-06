@@ -1,0 +1,291 @@
+Name: slingshot
+Attack: 2
+Defense: 0
+Slots: 0
+Range: 2
+Radius: 1
+
+Name: spear
+Attack: 6
+Defense: 1
+Slots: 1
+Range: 1
+Radius: 1
+
+Name: armor
+Attack: 2
+Defense: 7
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: shield
+Attack: 2
+Defense: 6
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: aura
+Attack: 0
+Defense: 8
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: hammer
+Attack: 8
+Defense: 2
+Slots: 2
+Range: 1
+Radius: 2
+
+Name: crossbow
+Attack: 5
+Defense: 1
+Slots: 2
+Range: 0
+Radius: 0
+
+Name: fireball
+Attack: 11
+Defense: 0
+Slots: 1
+Range: 3
+Radius: 3
+
+Name: sword
+Attack: 9
+Defense: 2
+Slots: 1
+Range: 0
+Radius: 0
+
+key: 'att' val: '2'
+key: 'def' val: '0'
+key: 'range' val: '2'
+key: 'radius' val: '1'
+key: 'radius' val: '1'
+key: 'att' val: '6'
+key: 'def' val: '1'
+key: 'slots' val: '1'
+key: 'range' val: '1'
+key: 'radius' val: '1'
+key: 'radius' val: '1'
+key: 'att' val: '2'
+key: 'def' val: '7'
+key: 'slots' val: '1'
+key: 'range' val: '0'
+key: 'radius' val: '0'
+key: 'radius' val: '0'
+key: 'att' val: '2'
+key: 'def' val: '6'
+key: 'slots' val: '1'
+key: 'range' val: '0'
+key: 'radius' val: '0'
+key: 'radius' val: '0'
+key: 'att' val: '0'
+key: 'def' val: '8'
+key: 'slots' val: '1'
+key: 'range' val: '0'
+key: 'radius' val: '0'
+key: 'radius' val: '0'
+key: 'att' val: '8'
+key: 'def' val: '2'
+key: 'slots' val: '2'
+key: 'range' val: '1'
+key: 'radius' val: '2'
+key: 'radius' val: '2'
+key: 'att' val: '5'
+key: 'def' val: '1'
+key: 'slots' val: '2'
+key: 'radius' val: '0'
+key: 'radius' val: '0'
+key: 'att' val: '11'
+key: 'def' val: '0'
+key: 'slots' val: '1'
+key: 'range' val: '3'
+key: 'radius' val: '3'
+key: 'radius' val: '3'
+key: 'att' val: '9'
+key: 'def' val: '2'
+key: 'slots' val: '1'
+key: 'range' val: '0'
+key: 'radius' val: '0'
+Name: slingshot
+Attack: 2
+Defense: 0
+Slots: 0
+Range: 2
+Radius: 1
+
+Name: spear
+Attack: 6
+Defense: 1
+Slots: 1
+Range: 1
+Radius: 1
+
+Name: armor
+Attack: 2
+Defense: 7
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: shield
+Attack: 2
+Defense: 6
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: aura
+Attack: 0
+Defense: 8
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: hammer
+Attack: 8
+Defense: 2
+Slots: 2
+Range: 1
+Radius: 2
+
+Name: crossbow
+Attack: 5
+Defense: 1
+Slots: 2
+Range: 0
+Radius: 0
+
+Name: fireball
+Attack: 11
+Defense: 0
+Slots: 1
+Range: 3
+Radius: 3
+
+Name: sword
+Attack: 9
+Defense: 2
+Slots: 1
+Range: 0
+Radius: 0
+
+key: 'att' val: '2'
+key: 'def' val: '0'
+key: 'range' val: '2'
+key: 'radius' val: '1'
+key: 'radius' val: '1'
+key: 'att' val: '6'
+key: 'def' val: '1'
+key: 'slots' val: '1'
+key: 'range' val: '1'
+key: 'radius' val: '1'
+key: 'radius' val: '1'
+key: 'att' val: '2'
+key: 'def' val: '7'
+key: 'slots' val: '1'
+key: 'range' val: '0'
+key: 'radius' val: '0'
+key: 'radius' val: '0'
+key: 'att' val: '2'
+key: 'def' val: '6'
+key: 'slots' val: '1'
+key: 'range' val: '0'
+key: 'radius' val: '0'
+key: 'radius' val: '0'
+key: 'att' val: '0'
+key: 'def' val: '8'
+key: 'slots' val: '1'
+key: 'range' val: '0'
+key: 'radius' val: '0'
+key: 'radius' val: '0'
+key: 'att' val: '8'
+key: 'def' val: '2'
+key: 'slots' val: '2'
+key: 'range' val: '1'
+key: 'radius' val: '2'
+key: 'radius' val: '2'
+key: 'att' val: '5'
+key: 'def' val: '1'
+key: 'slots' val: '2'
+key: 'radius' val: '0'
+key: 'radius' val: '0'
+key: 'att' val: '11'
+key: 'def' val: '0'
+key: 'slots' val: '1'
+key: 'range' val: '3'
+key: 'radius' val: '3'
+key: 'radius' val: '3'
+key: 'att' val: '9'
+key: 'def' val: '2'
+key: 'slots' val: '1'
+key: 'range' val: '0'
+key: 'radius' val: '0'
+Name: slingshot
+Attack: 2
+Defense: 0
+Slots: 0
+Range: 2
+Radius: 1
+
+Name: spear
+Attack: 6
+Defense: 1
+Slots: 1
+Range: 1
+Radius: 1
+
+Name: armor
+Attack: 2
+Defense: 7
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: shield
+Attack: 2
+Defense: 6
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: aura
+Attack: 0
+Defense: 8
+Slots: 1
+Range: 0
+Radius: 0
+
+Name: hammer
+Attack: 8
+Defense: 2
+Slots: 2
+Range: 1
+Radius: 2
+
+Name: crossbow
+Attack: 5
+Defense: 1
+Slots: 2
+Range: 0
+Radius: 0
+
+Name: fireball
+Attack: 11
+Defense: 0
+Slots: 1
+Range: 3
+Radius: 3
+
+Name: sword
+Attack: 9
+Defense: 2
+Slots: 1
+Range: 0
+Radius: 0
+

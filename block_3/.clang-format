@@ -1,0 +1,8 @@
+BasedOnStyle: LLVM
+AlignTrailingComments: true
+AllowShortIfStatementsOnASingleLine: false
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 140
+PointerAlignment: Left
