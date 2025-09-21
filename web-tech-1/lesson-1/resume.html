@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Resume - David Tsofin</title>
+</head>
+
+<body>
+    <header>
+        <h1>Resume</h1>
+        <nav class="navbar">
+            <ul class="navbar-list">
+                <li class="navbar-item"><a class="navbar-link" href="index.html">About Me</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="resume.html">Resume</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="schedule.html">My Schedule</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="interactive.html">Interactive Image</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="resume-container">
+        <section class="left-column">
+            <div>
+                <img alt="David Tsofin" src="img/david-photo.jpg" height="200">
+            </div>
+
+            <div>
+                <h2>Contact Information</h2>
+
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <a href="mailto:xtsofin@stuba.sk">xtsofin@stuba.sk</a>
+                </div>
+
+                <div class="contact-item">
+                    <h3>Phone</h3>
+                    <a href="tel:+421123456789">+421 123 456 789</a>
+                </div>
+
+                <div class="contact-item">
+                    <h3>LinkedIn</h3>
+                    <a href="https://www.linkedin.com/in/tsofindavid" target="_blank">LinkedIn
+                        Profile</a>
+                </div>
+
+                <div class="contact-item">
+                    <h3>Location</h3>
+                    <p>Bratislava, Slovakia</p>
+                </div>
+
+                <div class="contact-item">
+                    <h3>GitHub</h3>
+                    <a href="https://github.com/tsofindavid" target="_blank">github.com/tsofindavid</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Правая колонка -->
+        <section class="right-column">
+            <div class="education-section">
+                <h2>Education</h2>
+
+                <div>
+                    <h3>Slovak University of Technology</h3>
+                    <p><strong>Bachelor of Science, Applied Informatics</strong></p>
+                    <p>2024 – Present | Bratislava, Slovakia</p>
+                    <p>Relevant coursework: Web Technologies, Software Engineering, Computer Networks, Programming
+                        Techniques, Database Systems, Microprocessors Programming</p>
+                </div>
+
+                <div>
+                    <h3>Belarusian National Technical University</h3>
+                    <p><strong>Bachelor of Science, Information Technologies & Robotics</strong></p>
+                    <p>2018 – 2020 | Minsk, Belarus</p>
+                    <p>Foundation in computer science, mathematics, and engineering principles</p>
+                </div>
+            </div>
+
+            <div>
+                <h2>Computer Skills</h2>
+
+                <div>
+                    <h3>Programming Languages</h3>
+                    <ul>
+                        <li><strong>Main:</strong> TypeScript, Node.js, Deno</li>
+                        <li><strong>Additional:</strong> Python, Golang, C</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Frameworks</h3>
+                    <ul>
+                        <li>NestJS, Express.js, Koa, Flask</li>
+                        <li>Socket.io, WebSocket</li>
+                        <li>RESTful APIs</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Databases</h3>
+                    <ul>
+                        <li>PostgreSQL, MySQL, MongoDB, Redis</li>
+                        <li>Elasticsearch, Database Design</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Cloud & DevOps</h3>
+                    <ul>
+                        <li>AWS (Lambda, S3, EC2, VPC, ECS, RDS)</li>
+                        <li>Docker, CI/CD Pipelines</li>
+                        <li>Grafana, Kibana</li>
+                        <li>RabbitMQ</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li>Vue.js</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <h2>Language Skills</h2>
+
+                <div>
+                    <h3>Russian, Belarusian</h3>
+                    <p>Native Speaker</p>
+                </div>
+
+                <div>
+                    <h3>English</h3>
+                    <p>Upper-Intermediate (B2)</p>
+                    <p>Technical documentation, business communication</p>
+                </div>
+
+                <div>
+                    <h3>Slovak</h3>
+                    <p>Intermediate (B1)</p>
+                    <p>Daily communication, academic environment</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>2025 David's Personal Webpage</p>
+    </footer>
+</body>
+
+<style>
+    .resume-container {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+    }
+
+    .left-column {
+        background-color: gray;
+        color: white;
+        padding: 30px 25px;
+    }
+
+    .right-column {
+        background-color: white;
+        color: gray;
+        padding: 30px 35px;
+    }
+
+    .contact-item a {
+        color: white;
+    }
+</style>
+
+</html>

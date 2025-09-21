@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/index.css">
+    <title>My Schedule - David Tsofin</title>
+</head>
+
+<body>
+    <header>
+        <h1>My Schedule</h1>
+        <nav class="navbar">
+            <ul class="navbar-list">
+                <li class="navbar-item"><a class="navbar-link" href="index.html">About Me</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="resume.html">Resume</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="schedule.html">My Schedule</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="interactive.html">Interactive Image</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="schedule-container">
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th colspan="6">Winter Semester 2024/2025 - Applied Informatics</th>
+                </tr>
+                <tr>
+                    <th>Time</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="time-slot">8:00 - 9:30</td>
+                    <th colspan="1"></th>
+                    <td class="seminar">Programming Techniques</td>
+                    <td class="lecture">Mathematical Analysis</td>
+                    <td class="seminar">Web Technologies</td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td class="time-slot">9:45 - 11:15</td>
+                    <td class="lecture">Programming Techniques Lab</td>
+                    <td class="seminar">Computer Networks</td>
+                    <td class="lecture">Programming Techniques Lab</td>
+                    <td class="seminar">Web Technologies Lab</td>
+                    <td colspan="1"></td>
+
+                </tr>
+                <tr>
+                    <td class="time-slot">11:30 - 13:00</td>
+                    <td colspan="1"></td>
+                    <td class="seminar">Software Engineering</td>
+                    <td class="lecture">Database Systems Lab</td>
+                    <td class="lecture">Microprocessors Programming</td>
+                    <td colspan="1"></td>
+
+                </tr>
+                <tr>
+                    <td class="time-slot">13:00 - 14:00</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td class="time-slot">14:00 - 15:30</td>
+                    <td>Computer Networks Lab</td>
+                    <td>Technical English</td>
+                    <td class="lecture">Software Engineering Lab</td>
+                    <td>Microprocessors Lab</td>
+                    <td colspan="1"></td>
+
+                </tr>
+                <tr>
+                    <td class="time-slot">15:45 - 17:15</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td class="time-slot">17:30 - 19:00</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td class="time-slot">19:00 - 21:00</td>
+                    <td colspan="5"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="schedule-legend">
+            <h3>Schedule Legend</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <span class="legend-color math"></span>
+                    <span>Mathematics & Analysis</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color programming"></span>
+                    <span>Programming & Development</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color networks"></span>
+                    <span>Computer Networks</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color databases"></span>
+                    <span>Database Systems</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color software"></span>
+                    <span>Software Engineering</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color web"></span>
+                    <span>Web Technologies</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color microprocessors"></span>
+                    <span>Microprocessors</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color work-time"></span>
+                    <span>Work - Success Craft</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>2025 David's Personal Webpage</p>
+    </footer>
+</body>
+
+<style>
+    .schedule-container {
+        max-width: fit-content;
+    }
+
+    .schedule-table {
+        width: 100%;
+    }
+
+    .schedule-table th {
+        background-color: white;
+        padding: 12px;
+        text-align: center;
+        font-weight: bold;
+        border: 1px solid grey;
+    }
+
+    .schedule-table td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid grey
+    }
+
+    .time-slot {
+        background-color: #f9f9f9;
+        font-weight: bold;
+    }
+
+    .schedule-legend {
+        display: none;
+    }
+
+    .seminar {
+        background-color: greenyellow;
+    }
+
+    .lecture {
+        background-color: yellow;
+    }
+</style>
+
+</html>
