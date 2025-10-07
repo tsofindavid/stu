@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/index.css">
     <title>Interactive Image - David Tsofin</title>
 </head>
@@ -97,14 +98,12 @@
     }
 
     .interactive-container h2 {
-        color: #2c3e50;
         text-align: center;
         margin-bottom: 10px;
     }
 
     .interactive-container p {
         text-align: center;
-        color: #34495e;
         margin-bottom: 30px;
     }
 
@@ -133,25 +132,28 @@
         position: absolute;
         top: 100%;
         left: 0;
-        background-color: whitesmoke;
         padding: 10px;
         width: 200px;
+        background-color: rgba(255, 255, 255, 0.4);
     }
 
     .hotspot-info h3 {
         margin: 0 0 5px 0;
         font-size: 14px;
+        color: var(--color-comment);
     }
 
     .hotspot-info p {
         margin: 0;
         font-size: 12px;
         text-align: left;
+        color: var(--color-comment);
     }
 
     .hotspot:hover .hotspot-info {
         display: block;
     }
+
 
     .hotspot:hover {
         background-color: rgba(255, 255, 255, 0.4);

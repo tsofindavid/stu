@@ -58,7 +58,10 @@
     "iterator": "cpp",
     "type_traits": "cpp",
     "format": "cpp",
-    "chrono": "cpp"
+    "chrono": "cpp",
+    "span": "cpp",
+    "list": "cpp",
+    "ranges": "cpp"
   },
   "editor.formatOnSave": true
 }

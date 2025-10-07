@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/index.css">
     <title>David Tsofin Webpage</title>
 </head>
 
 <body>
     <header>
-        <h1>About Me</h1>
+        <h1 class="">About Me</h1>
         <nav class="navbar">
             <ul class="navbar-list">
                 <li class="navbar-item"><a class="navbar-link" href="index.html">About Me</a></li>
@@ -21,23 +22,32 @@
     </header>
 
     <main>
-        <section class="profile-section">
+        <section>
             <img class="profile-photo" alt="David Tsofin" src="img/david-photo.jpg" height="200">
-            <div class="profile-text">
+            <div>
                 <p>Hello! I'm David, a 2nd-year Applied Informatics student at Slovak University of Technology in
                     Bratislava. Originally from Belarus, I moved to Slovakia to pursue my passion for computer science
                     and software engineering.</p>
+
                 <p>I enjoy solving technical problems and learning new programming concepts. Currently, I'm working as a
                     Backend Engineer at International Company, where I lead development teams and architect scalable
                     solutions.
                     My experience spans from high-performance web applications.</p>
+
                 <p>In my free time, I'm working on my own projects and staying up-to-date with the latest trends in
                     cloud computing and DevOps. I'm particularly interested in distributed systems and how to build
                     applications that can scale to millions of users while maintaining high performance and reliability.
                 </p>
-                <p>When I'm not coding, you can find me reading technical books, experimenting with new frameworks, or
+
+                <p>
+                    When I'm not coding, you can find me reading technical books, experimenting with new frameworks, or
                     working on personal projects that challenge my problem-solving skills. I believe in continuous
-                    learning and always strive to improve both my technical abilities and leadership skills.</p>
+                    learning and always strive to improve both my technical abilities and leadership skills.
+
+                    When I'm not coding, you can find me reading technical books, experimenting with new frameworks, or
+                    working on personal projects that challenge my problem-solving skills. I believe in continuous
+                    learning and always strive to improve both my technical abilities and leadership skills.
+                </p>
             </div>
         </section>
 
@@ -61,19 +71,12 @@
     </footer>
 </body>
 <style>
-    .profile-section {
-        display: flex;
-        align-items: flex-start;
-        gap: 20px;
-        margin-bottom: 30px;
-    }
-
     .profile-photo {
+        float: left;
         flex-shrink: 0;
-    }
+        padding-right: 0.5rem;
+        padding-bottom: 0.3rem;
 
-    .profile-text {
-        flex: 1;
     }
 </style>
 
