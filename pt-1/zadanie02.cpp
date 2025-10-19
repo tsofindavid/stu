@@ -21,6 +21,8 @@ INSTRUCTIONS:
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -71,14 +73,42 @@ vector<int> listToVector(const List *list)
     return data;
 }
 
+set<int> listToSet(const List *list)
+{
+    set<int> data = {};
+    Node *ptr = list->first;
+
+    if (ptr != nullptr)
+    {
+        data.insert(ptr->data);
+
+        while (ptr->next != nullptr)
+        {
+            ptr = ptr->next;
+            data.insert(ptr->data);
+        }
+    }
+
+    return data;
+}
+
 List *vectorToList(const vector<int> data)
 {
-    Node *ptr = nullptr;
-    List *list = new List{ptr};
+    List *list = new List{nullptr};
 
-    for (size_t i = 0; i < data.size(); i++)
+    if (data.empty())
     {
-        ptr = new Node{data[i], ptr};
+        return list;
+    }
+
+    list->first = new Node{data[0], nullptr};
+
+    Node *ptr = list->first;
+
+    for (size_t i = 1; i < data.size(); i++)
+    {
+        ptr->next = new Node{data[i], nullptr};
+        ptr = ptr->next;
     }
 
     return list;
@@ -218,29 +248,29 @@ List *createList(const ListData *listData)
 
 void insertNode(List *sortedList, const int val)
 {
+    Node *node = new Node{val, nullptr};
+
+    if (sortedList->first == nullptr)
+    {
+        sortedList->first = node;
+        return;
+    }
+
+    if (val <= sortedList->first->data)
+    {
+        node->next = sortedList->first;
+        sortedList->first = node;
+        return;
+    }
 
     Node *ptr = sortedList->first;
-    if (ptr != nullptr)
+    while (ptr->next != nullptr && ptr->next->data < val)
     {
-        while (ptr->next != nullptr)
-        {
-            if (ptr->data > val)
-            {
-                break;
-            }
-            else
-            {
-                ptr = ptr->next;
-            }
-        }
+        ptr = ptr->next;
+    }
 
-        Node *node = new Node{val, ptr};
-        ptr = node;
-    }
-    else
-    {
-        sortedList->first = new Node{val, nullptr};
-    }
+    node->next = ptr->next;
+    ptr->next = node;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -277,27 +307,46 @@ void insertNode(List *sortedList, const int val)
 
 List *joinLists(List *list1, List *list2)
 {
-    List *list = list1;
-
-    if (list1->first == nullptr)
-    {
-        list = list2;
-        return list;
-    }
-
-    if (list2->first == nullptr)
-    {
-        list = list1;
-        return list;
-    }
+    List *list = new List{nullptr};
+    Node *tail = nullptr;
 
     Node *ptr = list1->first;
-    while (ptr->next != nullptr)
+    while (ptr != nullptr)
     {
+        Node *node = new Node{ptr->data, nullptr};
+
+        if (list->first == nullptr)
+        {
+            list->first = node;
+            tail = node;
+        }
+        else
+        {
+            tail->next = node;
+            tail = node;
+        }
+
         ptr = ptr->next;
     }
 
-    ptr->next = list2->first;
+    ptr = list2->first;
+    while (ptr != nullptr)
+    {
+        Node *node = new Node{ptr->data, nullptr};
+
+        if (list->first == nullptr)
+        {
+            list->first = node;
+            tail = node;
+        }
+        else
+        {
+            tail->next = node;
+            tail = node;
+        }
+
+        ptr = ptr->next;
+    }
 
     return list;
 }
@@ -328,12 +377,19 @@ List *joinLists(List *list1, List *list2)
 
 void removeLastNode(List *list)
 {
-    Node *ptr = list->first;
-    if (ptr == nullptr)
+    if (list->first == nullptr)
     {
         return;
     }
 
+    if (list->first->next == nullptr)
+    {
+        delete list->first;
+        list->first = nullptr;
+        return;
+    }
+
+    Node *ptr = list->first;
     while (ptr->next->next != nullptr)
     {
         ptr = ptr->next;
@@ -423,8 +479,21 @@ bool isPalindrome(const List *list)
 
 int sumNodes(const List *list, const size_t n)
 {
-    // TODO
-    return -1; // change this line according to the task, it's here only for compilation
+    int sum = 0;
+
+    if (list->first == nullptr || n == 0)
+    {
+        return sum;
+    }
+
+    Node *ptr = list->first;
+    for (size_t i = 0; i < n; i++)
+    {
+        sum += ptr->data;
+        ptr = ptr->next;
+    }
+
+    return sum;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -461,8 +530,34 @@ int sumNodes(const List *list, const size_t n)
 
 bool contains(const List *list1, const List *list2)
 {
-    // TODO
-    return false; // change this line according to the task, it's here only for compilation
+
+    if (list1->first == nullptr)
+    {
+        if (list2->first == nullptr)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    if (list2->first == nullptr)
+    {
+        return true;
+    }
+
+    set<int> set1 = listToSet(list1);
+    set<int> set2 = listToSet(list2);
+
+    for (int value : set2)
+    {
+        if (!set1.count(value))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -496,8 +591,24 @@ bool contains(const List *list1, const List *list2)
 
 List *deepCopyList(const List *list)
 {
-    // TODO
-    return nullptr; // change this line according to the task, it's here only for compilation
+    List *copy = new List{nullptr};
+
+    Node *ptr = list->first;
+    if (ptr != nullptr)
+    {
+        Node *copyPtr = new Node{ptr->data};
+        copy->first = copyPtr;
+
+        while (ptr->next != nullptr)
+        {
+            ptr = ptr->next;
+
+            copyPtr->next = new Node{ptr->data};
+            copyPtr = copyPtr->next;
+        }
+    }
+
+    return copy;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -528,8 +639,31 @@ List *deepCopyList(const List *list)
 
 Node *findLastNodeOccurrence(const List *list, const int val)
 {
-    // TODO
-    return nullptr; // change this line according to the task, it's here only for compilation
+    Node *last = nullptr;
+
+    if (list->first == nullptr)
+    {
+        return last;
+    }
+
+    Node *ptr = list->first;
+
+    if (ptr->data == val)
+    {
+        last = ptr;
+    }
+
+    while (ptr->next != nullptr)
+    {
+        ptr = ptr->next;
+
+        if (ptr->data == val)
+        {
+            last = ptr;
+        }
+    }
+
+    return last; // change this line according to the task, it's here only for compilation
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -655,7 +789,7 @@ int main()
         cout << "() + (): ";
         printList(joined);
         cout << " (expected: ())" << endl;
-        // deleteList(joined);
+        deleteList(joined);
 
         int data1[] = {1};
         int data2[] = {2};
@@ -667,9 +801,9 @@ int main()
         cout << "(1) + (2): ";
         printList(joined);
         cout << " (expected: (1, 2))" << endl;
-        // deleteList(list1);
-        // deleteList(list2);
-        // deleteList(joined);
+        deleteList(list1);
+        deleteList(list2);
+        deleteList(joined);
     }
     cout << endl;
 

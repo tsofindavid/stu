@@ -1,0 +1,9 @@
+{
+  "lsp": {
+    "clangd": {
+      "fetch": {
+        "pre_release": true
+      }
+    }
+  }
+}
