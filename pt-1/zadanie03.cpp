@@ -97,6 +97,11 @@ nullptr};` Use appropriate standard library function to compare string contents.
 */
 void insertionSort(const char *data[])
 {
+  if (data[0] == nullptr)
+  {
+    return;
+  }
+
   for (size_t i = 1; data[i] != nullptr; ++i)
   {
     const char *val = data[i];
@@ -148,7 +153,7 @@ void insertionSort(List *list)
     Node *current = list->first;
     list->first = list->first->next;
 
-    if (head == nullptr || current->data < head->data)
+    if (head == nullptr || current->data > head->data)
     {
 
       current->next = head;
@@ -160,7 +165,7 @@ void insertionSort(List *list)
       while (p != NULL)
       {
         if (p->next == nullptr ||
-            current->data < p->next->data)
+            current->data > p->next->data)
         {
           current->next = p->next;
           p->next = current;
@@ -202,53 +207,30 @@ output after : (20, 20, 20, 20, 8, 7, 5, 4, 2, 2, 1, 0, 20, 20, 20, 20)
 void mergeNeighbours(int *output, const int *input, const size_t low,
                      const size_t middle, const size_t high)
 {
-
-  size_t n1 = middle - low + 1;
-  size_t n2 = high - middle;
-
-  int L[n1];
-  int R[n2];
-
-  for (size_t i = 0; i < n1; i++)
-    L[i] = input[low + i];
-
-  for (size_t j = 0; j < n2; j++)
-    R[j] = input[middle + 1 + j];
-
-  size_t i = 0, j = 0;
+  size_t i = low;
+  size_t j = middle;
   size_t k = low;
 
-  while (i < n1 && j < n2)
+  while (i < middle && j < high)
   {
-    if (L[i] <= R[j])
+    if (input[i] >= input[j])
     {
-      output[k] = L[i];
-      i++;
+      output[k++] = input[i++];
     }
     else
     {
-      output[k] = R[j];
-      j++;
+      output[k++] = input[j++];
     }
-    k++;
   }
 
-  // Copy the remaining elements of L[],
-  // if there are any
-  while (i < n1)
+  while (i < middle)
   {
-    output[k] = L[i];
-    i++;
-    k++;
+    output[k++] = input[i++];
   }
 
-  // Copy the remaining elements of R[],
-  // if there are any
-  while (j < n2)
+  while (j < high)
   {
-    output[k] = R[j];
-    j++;
-    k++;
+    output[k++] = input[j++];
   }
 }
 
@@ -274,9 +256,38 @@ If using top-down approach:
 - Allocate and copy data in this function
 - Implement recursive function to handle merge sort logic
 */
+void mergeSortRecursive(int input[], int output[], int low, int high)
+{
+  if (high - low <= 1)
+  {
+    return;
+  }
+
+  size_t middle = (low + high) / 2;
+
+  mergeSortRecursive(output, input, low, middle);
+  mergeSortRecursive(output, input, middle, high);
+
+  mergeNeighbours(output, input, low, middle, high);
+}
+
 void mergeSort(int *data, const size_t length)
 {
-  // TODO
+  if (length <= 1)
+  {
+    return;
+  }
+
+  int *temp = new int[length];
+
+  for (size_t i = 0; i < length; ++i)
+  {
+    temp[i] = data[i];
+  }
+
+  mergeSortRecursive(temp, data, 0, length);
+
+  delete[] temp;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -295,6 +306,12 @@ void printArray(const int *data, size_t length)
 
 void printCStringArray(const char *data[])
 {
+  if (data[0] == nullptr)
+  {
+    cout << "nullptr" << endl;
+    return;
+  }
+
   for (size_t i = 0; data[i] != nullptr; ++i)
   {
     cout << data[i];
@@ -306,6 +323,11 @@ void printCStringArray(const char *data[])
 
 void printList(const List &list)
 {
+  if (list.first == nullptr)
+  {
+    cout << "empty list" << endl;
+  }
+
   Node *current = list.first;
   while (current != nullptr)
   {
@@ -335,108 +357,181 @@ void deleteList(List &list)
 
 int main()
 {
-  // Task 1: insertionSort - integers
-  int nums1[] = {1, 3, 4, 6, 7, 12, 9, 0, 2};
-  size_t len1 = 9;
+  //==============================================
+  // TASK 1 - insertionSort (integers)
+  //==============================================
+  cout << "==================== Task 1 ====================" << endl;
 
-  cout << "Task 1 - To sort integers: " << endl;
-  printArray(nums1, len1);
+  int t1_1[] = {3, 1, 2};
+  cout << "Test 1\nfunc insertionSort\ninput: ";
+  printArray(t1_1, 3);
+  insertionSort(t1_1, 3);
+  cout << "output (expected): 3, 2, 1\nresult: ";
+  printArray(t1_1, 3);
+  cout << endl;
 
-  insertionSort(nums1, len1);
+  int t1_2[] = {1, 2, 2, 1};
+  cout << "Test 2\nfunc insertionSort\ninput: ";
+  printArray(t1_2, 4);
+  insertionSort(t1_2, 4);
+  cout << "output (expected): 2, 2, 1, 1\nresult: ";
+  printArray(t1_2, 4);
+  cout << endl;
 
-  cout << "Task 1 - Sorted integers: " << endl;
-  printArray(nums1, len1);
-  cout << "\n"
-       << endl;
+  int t1_3[] = {5};
+  cout << "Test 3\nfunc insertionSort\ninput: ";
+  printArray(t1_3, 1);
+  insertionSort(t1_3, 1);
+  cout << "output (expected): 5\nresult: ";
+  printArray(t1_3, 1);
+  cout << "\n\n";
 
-  // Task 2: insertionSort - strings
-  const char *names[] = {"Juraj", "Peter", "Andrej", nullptr};
-  cout << "Task 2 - To sort strings: " << endl;
-  printCStringArray(names);
+  //==============================================
+  // TASK 2 - insertionSort (strings)
+  //==============================================
+  cout << "==================== Task 2 ====================" << endl;
 
-  insertionSort(names);
+  const char *t2_1[] = {"Juraj", "Peter", "Andrej", nullptr};
+  cout << "Test 1\nfunc insertionSort\ninput: ";
+  printCStringArray(t2_1);
+  insertionSort(t2_1);
+  cout << "output (expected): Peter, Juraj, Andrej\nresult: ";
+  printCStringArray(t2_1);
+  cout << endl;
 
-  cout << "Task 2 - Sorted strings: " << endl;
-  printCStringArray(names);
-  cout << "\n"
-       << endl;
+  const char *t2_2[] = {"Juraj", "Anabela", "Peter", "Andrej", nullptr};
+  cout << "Test 2\nfunc insertionSort\ninput: ";
+  printCStringArray(t2_2);
+  insertionSort(t2_2);
+  cout << "output (expected): Peter, Juraj, Andrej, Anabela\nresult: ";
+  printCStringArray(t2_2);
+  cout << endl;
 
-  // Task 3: insertionSort - linked list
-  List list{nullptr};
+  const char *t2_3[] = {"Andrej", "Juraj", "Andrej", nullptr};
+  cout << "Test 3\nfunc insertionSort\ninput: ";
+  printCStringArray(t2_3);
+  insertionSort(t2_3);
+  cout << "output (expected): Juraj, Andrej, Andrej\nresult: ";
+  printCStringArray(t2_3);
+  cout << "\n\n";
 
-  Node *a = new Node{2, nullptr};
-  Node *b = new Node{1, nullptr};
-  Node *c = new Node{3, nullptr};
+  cout << "Test 4\nfunc insertionSort\ninput: nullptr only\n";
+  const char *t2_4[] = {nullptr};
+  insertionSort(t2_4);
+  cout << "output (expected): nullptr only\nresult: ";
+  printCStringArray(t2_4);
+  cout << endl;
 
-  a->next = b;
-  b->next = c;
+  //==============================================
+  // TASK 3 - insertionSort (linked list)
+  //==============================================
+  cout << "==================== Task 3 ====================" << endl;
 
-  list.first = a;
+  // Test 1
+  List l3_1{nullptr};
+  Node *n11 = new Node{2, nullptr};
+  Node *n12 = new Node{1, nullptr};
+  Node *n13 = new Node{3, nullptr};
+  n11->next = n12;
+  n12->next = n13;
+  l3_1.first = n11;
+  cout << "Test 1\nfunc insertionSort\ninput: ";
+  printList(l3_1);
+  insertionSort(&l3_1);
+  cout << "output (expected): 3 -> 2 -> 1\nresult: ";
+  printList(l3_1);
+  deleteList(l3_1);
+  cout << endl;
 
-  cout << "Task 3 - To sort linked list: " << endl;
-  printList(list);
-  insertionSort(&list);
-  cout << "Task 3 - Sorted linked list: " << endl;
-  printList(list);
-  deleteList(list);
-  cout << "\n"
-       << endl;
+  // Test 2
+  List l3_2{nullptr};
+  Node *n21 = new Node{1, nullptr};
+  Node *n22 = new Node{2, nullptr};
+  Node *n23 = new Node{2, nullptr};
+  Node *n24 = new Node{1, nullptr};
+  n21->next = n22;
+  n22->next = n23;
+  n23->next = n24;
+  l3_2.first = n21;
+  cout << "Test 2\nfunc insertionSort\ninput: ";
+  printList(l3_2);
+  insertionSort(&l3_2);
+  cout << "output (expected): 2 -> 2 -> 1 -> 1\nresult: ";
+  printList(l3_2);
+  deleteList(l3_2);
+  cout << endl;
 
-  // Task 4: mergeNeighbours
-  // Тест 0: исходный пример
-  const int input0[] = {10, 10, 10, 10, 7, 5, 2, 0, 8, 4, 2, 1, 10, 10, 10, 10};
-  int output0[] = {20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
-  cout << "Test 0 - Original example:" << endl;
-  mergeNeighbours(output0, input0, 4, 8, 12);
-  printArray(output0, 16);
+  // Test 3 - empty list
+  List l3_3{nullptr};
+  cout << "Test 3\nfunc insertionSort\ninput: empty list\n";
+  insertionSort(&l3_3);
+  cout << "output (expected): empty list\nresult: ";
+  printList(l3_3);
+  cout << "\n\n";
 
-  // Тест 1
-  const int input1[] = {5, 3, 1, 4, 2, 0};
-  int output1[] = {9, 9, 9, 9, 9, 9};
-  cout << "Test 1:" << endl;
-  mergeNeighbours(output1, input1, 0, 3, 6);
-  printArray(output1, 6); // Expected: 5 4 3 2 1 0
+  //==============================================
+  // TASK 4 - mergeNeighbours
+  //==============================================
+  cout << "==================== Task 4 ====================" << endl;
 
-  // Тест 2 - одинаковые элементы
-  const int input2[] = {7, 7, 7, 7, 7, 7};
-  int output2[] = {0, 0, 0, 0, 0, 0};
-  cout << "Test 2:" << endl;
-  mergeNeighbours(output2, input2, 0, 3, 6);
-  printArray(output2, 6); // Expected: 7 7 7 7 7 7
+  // Test 1
+  const int in4_1[] = {7, 5, 2, 0, 8, 4, 2, 1};
+  int out4_1[] = {9, 9, 9, 9, 9, 9, 9, 9};
+  cout << "Test 1\nfunc mergeNeighbours\ninput: ";
+  printArray(in4_1, 8);
+  mergeNeighbours(out4_1, in4_1, 0, 4, 8);
+  cout << "output (expected): 8,7,5,4,2,2,1,0\nresult: ";
+  printArray(out4_1, 8);
+  cout << endl;
 
-  // Тест 3 - левая часть пустая
-  const int input3[] = {8, 6, 4};
-  int output3[] = {0, 0, 0};
-  cout << "Test 3:" << endl;
-  mergeNeighbours(output3, input3, 0, 0, 3);
-  printArray(output3, 3); // Expected: 8 6 4
+  // Test 2
+  const int in4_2[] = {3, 1, 4, 2};
+  int out4_2[] = {0, 0, 0, 0};
+  cout << "Test 2\nfunc mergeNeighbours\ninput: ";
+  printArray(in4_2, 4);
+  mergeNeighbours(out4_2, in4_2, 0, 2, 4);
+  cout << "output (expected): 4,3,2,1\nresult: ";
+  printArray(out4_2, 4);
+  cout << endl;
 
-  // Тест 4 - правая часть пустая
-  const int input4[] = {9, 5, 1};
-  int output4[] = {0, 0, 0};
-  cout << "Test 4:" << endl;
-  mergeNeighbours(output4, input4, 0, 3, 3);
-  printArray(output4, 3); // Expected: 9 5 1
+  // Test 3
+  const int in4_3[] = {5, 5, 5, 1, 1, 1};
+  int out4_3[] = {0, 0, 0, 0, 0, 0};
+  cout << "Test 3\nfunc mergeNeighbours\ninput: ";
+  printArray(in4_3, 6);
+  mergeNeighbours(out4_3, in4_3, 0, 3, 6);
+  cout << "output (expected): 5,5,5,1,1,1\nresult: ";
+  printArray(out4_3, 6);
+  cout << "\n\n";
 
-  // Тест 5 - по одному элементу
-  const int input5[] = {10, 5};
-  int output5[] = {0, 0};
-  cout << "Test 5:" << endl;
-  mergeNeighbours(output5, input5, 0, 1, 2);
-  printArray(output5, 2); // Expected: 10 5
+  //==============================================
+  // TASK 5 - mergeSort
+  //==============================================
+  cout << "==================== Task 5 ====================" << endl;
 
-  // Тест 6 - перемешанные элементы
-  const int input6[] = {3, 1, 4, 2};
-  int output6[] = {0, 0, 0, 0};
-  cout << "Test 6:" << endl;
-  mergeNeighbours(output6, input6, 0, 2, 4);
-  printArray(output6, 4); // Expected: 4 3 2 1
+  int t5_1[] = {1, 3, 2};
+  cout << "Test 1\nfunc mergeSort\ninput: ";
+  printArray(t5_1, 3);
+  mergeSort(t5_1, 3);
+  cout << "output (expected): 3,2,1\nresult: ";
+  printArray(t5_1, 3);
+  cout << endl;
 
-  // Task 5: mergeSort
-  int nums2[] = {1, 2, 2, 1};
-  mergeSort(nums2, 4);
-  cout << "Task 5 - Merge sorted: ";
-  printArray(nums2, 4);
+  int t5_2[] = {1, 2, 2, 1};
+  cout << "Test 2\nfunc mergeSort\ninput: ";
+  printArray(t5_2, 4);
+  mergeSort(t5_2, 4);
+  cout << "output (expected): 2,2,1,1\nresult: ";
+  printArray(t5_2, 4);
+  cout << endl;
+
+  int t5_3[] = {5};
+  cout << "Test 3\nfunc mergeSort\ninput: ";
+  printArray(t5_3, 1);
+  mergeSort(t5_3, 1);
+  cout << "output (expected): 5\nresult: ";
+  printArray(t5_3, 1);
+  cout << endl;
 
   return 0;
 }

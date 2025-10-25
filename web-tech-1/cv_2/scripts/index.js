@@ -1,437 +1,216 @@
-document.addEventListener("DOMContentLoaded", function () {
-  setupCharCounters();
-  setupValidation();
-  setupDependentSelects();
-  setupPaymentTypeToggle();
-  setupEquipmentOtherToggle();
-  setupHiddenField();
-  setupAgeCalculation();
-  setupFormSubmit();
-});
-
-// Počítadlo znakov
-function setupCharCounters() {
-  const fields = [
-    "firstName",
-    "lastName",
-    "email",
-    "phone",
-    "companyName",
-    "ico",
-    "equipOtherText",
-    "notes",
-  ];
-
-  fields.forEach((fieldId) => {
-    const field = document.getElementById(fieldId);
-    const counter = document.getElementById(fieldId + "Counter");
-
-    if (field && counter) {
-      field.addEventListener("input", function () {
-        const max = this.maxLength;
-        const current = this.value.length;
-        counter.textContent = `${current} / ${max}`;
-      });
-    }
-  });
-}
-
-function setupAgeCalculation() {
-  const birthDateField = document.getElementById("birthDate");
-  const ageField = document.getElementById("age");
-
-  birthDateField.addEventListener("change", function () {
-    if (this.value) {
-      const birthDate = new Date(this.value);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-
-      if (
-        monthDiff < 0 ||
-        (monthDiff === 0 && today.getDate() < birthDate.getDate())
-      ) {
-        age--;
-      }
-
-      ageField.value = age;
-      validateAge();
-    }
-  });
-}
-
-function validateAge() {
-  const birthDateField = document.getElementById("birthDate");
-  const ageField = document.getElementById("age");
-  const ageError = document.getElementById("ageError");
-
-  if (!birthDateField.value || !ageField.value) return false;
-
-  const birthDate = new Date(birthDateField.value);
-  const today = new Date();
-  let calculatedAge = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    calculatedAge--;
-  }
-
-  if (parseInt(ageField.value) !== calculatedAge) {
-    ageError.textContent = "Vek nezodpovedá dátumu narodenia";
-    ageField.classList.add("error");
-    return false;
-  } else {
-    ageError.textContent = "";
-    ageField.classList.remove("error");
-    return true;
-  }
-}
-
-function validateEmail(email) {
-  // Min 3 znaky pred @, min 2 domény, vrcholová doména 2-4 znaky
-  const regex = /^[^\s@]{3,}@[^\s@]+\.[^\s@]+$/;
-
-  if (!regex.test(email)) return false;
-
-  const parts = email.split("@");
-  if (parts[0].length < 3) return false;
-
-  const domain = parts[1];
-  const domainParts = domain.split(".");
-
-  if (domainParts.length < 2) return false;
-
-  const topDomain = domainParts[domainParts.length - 1];
-  if (topDomain.length < 2 || topDomain.length > 4) return false;
-
-  return true;
-}
-
-function validatePhone(phone) {
-  return /^\d{9,15}$/.test(phone.replace(/\s/g, ""));
-}
-
-// Nastavenie validácie
-function setupValidation() {
-  // Email validácia
-  const emailField = document.getElementById("email");
-  emailField.addEventListener("blur", function () {
-    const emailError = document.getElementById("emailError");
-    if (this.value && !validateEmail(this.value)) {
-      emailError.textContent =
-        "Neplatný email (min. 3 znaky pred @, 2 domény, vrcholová doména 2-4 znaky)";
-      this.classList.add("error");
-    } else {
-      emailError.textContent = "";
-      this.classList.remove("error");
-    }
-  });
-
-  // Telefón validácia
-  const phoneField = document.getElementById("phone");
-  phoneField.addEventListener("blur", function () {
-    const phoneError = document.getElementById("phoneError");
-    if (this.value && !validatePhone(this.value)) {
-      phoneError.textContent = "Neplatné telefónne číslo (9-15 číslic)";
-      this.classList.add("error");
-    } else {
-      phoneError.textContent = "";
-      this.classList.remove("error");
-    }
-  });
-
-  // Povinné polia
-  ["firstName", "lastName", "gender", "birthDate"].forEach((fieldId) => {
-    const field = document.getElementById(fieldId);
-    field.addEventListener("blur", function () {
-      const errorEl = document.getElementById(fieldId + "Error");
-      if (!this.value) {
-        errorEl.textContent = "Toto pole je povinné";
-        this.classList.add("error");
-      } else {
-        errorEl.textContent = "";
-        this.classList.remove("error");
-      }
-    });
-  });
-}
-
-// Závislé zoznamy
-function setupDependentSelects() {
-  const sportSelect = document.getElementById("sport");
-  const facilitySelect = document.getElementById("facility");
-  const timeSlotSelect = document.getElementById("timeSlot");
-
-  sportSelect.addEventListener("change", function () {
-    facilitySelect.innerHTML = '<option value="">Vyberte priestor...</option>';
-    timeSlotSelect.innerHTML =
-      '<option value="">Najprv vyberte priestor</option>';
-    timeSlotSelect.disabled = true;
-
-    if (this.value && sportData[this.value]) {
-      facilitySelect.disabled = false;
-      const facilities = sportData[this.value].facilities;
-
-      for (const [key, facility] of Object.entries(facilities)) {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = `${facility.name} (${facility.price}€/2h)`;
-        option.dataset.price = facility.price;
-        facilitySelect.appendChild(option);
-      }
-    } else {
-      facilitySelect.disabled = true;
-    }
-  });
-
-  facilitySelect.addEventListener("change", function () {
-    timeSlotSelect.innerHTML = '<option value="">Vyberte čas...</option>';
-
-    if (this.value && timeSlots[this.value]) {
-      timeSlotSelect.disabled = false;
-      const slots = timeSlots[this.value];
-
-      slots.forEach((slot) => {
-        const option = document.createElement("option");
-        option.value = slot.value;
-        option.textContent = `${slot.label} ${
-          slot.price > 0 ? "(+" + slot.price + "€)" : ""
-        }`;
-        option.dataset.price = slot.price;
-        timeSlotSelect.appendChild(option);
-      });
-    } else {
-      timeSlotSelect.disabled = true;
-    }
-  });
-}
-
-// Prepínanie typu platby
-function setupPaymentTypeToggle() {
-  const paymentRadios = document.querySelectorAll('input[name="payment"]');
-  const invoiceFields = document.getElementById("invoiceFields");
-
-  paymentRadios.forEach((radio) => {
-    radio.addEventListener("change", function () {
-      if (this.value === "invoice") {
-        invoiceFields.classList.remove("hidden-field");
-      } else {
-        invoiceFields.classList.add("hidden-field");
-      }
-    });
-  });
-}
-
-// Prepínanie "iné" vybavenie
-function setupEquipmentOtherToggle() {
-  const otherCheckbox = document.getElementById("equipOther");
-  const otherTextField = document.getElementById("equipOtherText");
-  const otherCounter = document.getElementById("equipOtherTextCounter");
-
-  otherCheckbox.addEventListener("change", function () {
-    if (this.checked) {
-      otherTextField.classList.remove("hidden-field");
-      otherCounter.classList.remove("hidden-field");
-    } else {
-      otherTextField.classList.add("hidden-field");
-      otherCounter.classList.add("hidden-field");
-      otherTextField.value = "";
-    }
-  });
-}
-
-// Skryté pole
-function setupHiddenField() {
-  const showBtn = document.getElementById("showHiddenBtn");
-  const hiddenField = document.getElementById("hiddenField");
-
-  showBtn.addEventListener("click", function () {
-    if (hiddenField.classList.contains("hidden-field")) {
-      hiddenField.classList.remove("hidden-field");
-      this.textContent = "Skryť pole";
-    } else {
-      hiddenField.classList.add("hidden-field");
-      this.textContent = "Zobraziť skryté pole";
-    }
-  });
-}
-
-// Odoslanie formulára
-function setupFormSubmit() {
-  const form = document.getElementById("bookingForm");
-  const modal = document.getElementById("previewModal");
-  const closeModal = document.getElementById("closeModal");
-  const cancelSubmit = document.getElementById("cancelSubmit");
-  const confirmSubmit = document.getElementById("confirmSubmit");
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    if (validateForm()) {
-      showPreview();
-      modal.style.display = "block";
-    }
-  });
-
-  closeModal.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-  cancelSubmit.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-  confirmSubmit.addEventListener("click", function () {
-    form.submit();
-  });
-
-  window.addEventListener("click", function (e) {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-}
-
-// Validácia celého formulára
-function validateForm() {
-  let isValid = true;
-
-  // Povinné polia
-  const requiredFields = [
-    "firstName",
-    "lastName",
-    "gender",
-    "birthDate",
-    "age",
-    "email",
-    "sport",
-  ];
-
-  requiredFields.forEach((fieldId) => {
-    const field = document.getElementById(fieldId);
-    const errorEl = document.getElementById(fieldId + "Error");
-
-    if (!field.value) {
-      errorEl.textContent = "Toto pole je povinné";
-      field.classList.add("error");
-      isValid = false;
-    }
-  });
-
-  // Email validácia
-  const email = document.getElementById("email").value;
-  if (email && !validateEmail(email)) {
-    document.getElementById("emailError").textContent = "Neplatný email";
-    document.getElementById("email").classList.add("error");
-    isValid = false;
-  }
-
-  // Vek validácia
-  if (!validateAge()) {
-    isValid = false;
-  }
-
-  return isValid;
-}
-
-// Zobrazenie náhľadu
-function showPreview() {
-  const summaryContent = document.getElementById("summaryContent");
-  let totalPrice = 0;
-  let html = "";
-
-  // Osobné údaje
-  html += "<h3>Osobné údaje</h3>";
-  html += `<div class="summary-item"><span>Meno:</span><span>${
-    document.getElementById("firstName").value
-  } ${document.getElementById("lastName").value}</span></div>`;
-  html += `<div class="summary-item"><span>Pohlavie:</span><span>${
-    document.getElementById("gender").selectedOptions[0].text
-  }</span></div>`;
-  html += `<div class="summary-item"><span>Vek:</span><span>${
-    document.getElementById("age").value
-  } rokov</span></div>`;
-  html += `<div class="summary-item"><span>Email:</span><span>${
-    document.getElementById("email").value
-  }</span></div>`;
-
-  const phone = document.getElementById("phone").value;
-  if (phone) {
-    const phoneCode = document.getElementById("phoneCode").value;
-    html += `<div class="summary-item"><span>Telefón:</span><span>${phoneCode} ${phone}</span></div>`;
-  }
-
-  // Rezervácia
-  html += "<h3>Detaily rezervácie</h3>";
-  const sport = document.getElementById("sport");
-  const facility = document.getElementById("facility");
-  const timeSlot = document.getElementById("timeSlot");
-
-  html += `<div class="summary-item"><span>Šport:</span><span>${sport.selectedOptions[0].text}</span></div>`;
-
-  if (facility.value) {
-    const facilityPrice = parseFloat(facility.selectedOptions[0].dataset.price);
-    html += `<div class="summary-item"><span>Priestor:</span><span>${facility.selectedOptions[0].text}</span></div>`;
-    totalPrice += facilityPrice;
-  }
-
-  if (timeSlot.value) {
-    const timePrice = parseFloat(
-      timeSlot.selectedOptions[0].dataset.price || 0
-    );
-    html += `<div class="summary-item"><span>Čas:</span><span>${timeSlot.selectedOptions[0].text}</span></div>`;
-    totalPrice += timePrice;
-  }
-
-  const participants = document.getElementById("participants").value;
-  html += `<div class="summary-item"><span>Počet osôb:</span><span>${participants}</span></div>`;
-
-  // Vybavenie
-  const equipment = document.querySelectorAll(
-    'input[name="equipment"]:checked'
+function initFields() {
+  store[FIELD_IDS.SPORT].innerHTML = Object.keys(SPORT_DATA).reduce(
+    (html, key) =>
+      `${html}<option value="${key}">${SPORT_DATA[key].name}</option>`,
+    '<option value="">Select sport...</option>',
   );
-  if (equipment.length > 0) {
-    html += "<h3>Vybavenie</h3>";
-    equipment.forEach((item) => {
-      if (item.value === "ball") {
-        html += `<div class="summary-item"><span>Lopta:</span><span>5€</span></div>`;
-        totalPrice += 5;
-      } else if (item.value === "shoes") {
-        html += `<div class="summary-item"><span>Športová obuv:</span><span>10€</span></div>`;
-        totalPrice += 10;
-      } else if (item.value === "other") {
-        const otherText = document.getElementById("equipOtherText").value;
-        html += `<div class="summary-item"><span>Iné (${otherText}):</span><span>0€</span></div>`;
-      }
-    });
-  }
-
-  // Platba
-  const payment = document.querySelector('input[name="payment"]:checked');
-  html += "<h3>Platba</h3>";
-  html += `<div class="summary-item"><span>Typ platby:</span><span>${payment.labels[0].textContent}</span></div>`;
-
-  if (payment.value === "invoice") {
-    const companyName = document.getElementById("companyName").value;
-    const ico = document.getElementById("ico").value;
-    if (companyName)
-      html += `<div class="summary-item"><span>Spoločnosť:</span><span>${companyName}</span></div>`;
-    if (ico)
-      html += `<div class="summary-item"><span>IČO:</span><span>${ico}</span></div>`;
-  }
-
-  // Poznámka
-  const notes = document.getElementById("notes").value;
-  if (notes) {
-    html += "<h3>Poznámka</h3>";
-    html += `<p>${notes}</p>`;
-  }
-
-  // Celková cena
-  html += `<div class="summary-item summary-total"><span>Celková cena:</span><span>${totalPrice}€</span></div>`;
-
-  summaryContent.innerHTML = html;
 }
+
+function onClickHiddenBtn() {
+  if (store[FIELD_IDS.HIDDEN_FIELD].style.display === "none") {
+    store[FIELD_IDS.HIDDEN_FIELD].style.display = "";
+  } else {
+    store[FIELD_IDS.HIDDEN_FIELD].style.display = "none";
+  }
+}
+
+function onChangeEquipOther() {
+  if (store[FIELD_IDS.EQUIP_OTHER].checked) {
+    store[FIELD_IDS.EQUIP_OTHER_TEXT].style.display = "";
+    store[FIELD_IDS.EQUIP_OTHER_TEXT_COUNTER].style.display = "";
+  } else {
+    store[FIELD_IDS.EQUIP_OTHER_TEXT].style.display = "none";
+    store[FIELD_IDS.EQUIP_OTHER_TEXT_COUNTER].style.display = "none";
+  }
+}
+
+function onChangeCount(counter, field, max) {
+  store[counter].innerText = `${store[field].value.length} / ${max}`;
+}
+
+function onChangeRequired(field) {
+  document.getElementById(getErrorId(field)).innerText = "";
+}
+
+function onChangeSport() {
+  if (!store[FIELD_IDS.SPORT].value) {
+    store[FIELD_IDS.FACILITY].innerHTML =
+      '<option value="">First select sport</option>';
+    store[FIELD_IDS.FACILITY].disabled = true;
+    return;
+  }
+
+  store[FIELD_IDS.FACILITY].innerHTML = Object.keys(
+    SPORT_DATA[store[FIELD_IDS.SPORT].value].facilities,
+  ).reduce(
+    (html, key) =>
+      `${html}<option value="${key}">${SPORT_DATA[store[FIELD_IDS.SPORT].value].facilities[key].name}</option>`,
+    '<option value="">Select facility...</option>',
+  );
+  store[FIELD_IDS.FACILITY].disabled = false;
+}
+
+function onChangeFacility() {
+  if (!store[FIELD_IDS.SPORT].value || !store[FIELD_IDS.FACILITY].value) {
+    store[FIELD_IDS.TIME_SLOT].innerHTML =
+      '<option value="">First select facility</option>';
+    store[FIELD_IDS.TIME_SLOT].disabled = true;
+    return;
+  }
+
+  store[FIELD_IDS.TIME_SLOT].innerHTML = SPORT_DATA[
+    store[FIELD_IDS.SPORT].value
+  ].facilities[store[FIELD_IDS.FACILITY].value].times.reduce(
+    (html, time) => `${html}<option value="${time}">${time}</option>`,
+    '<option value="">Select time...</option>',
+  );
+  store[FIELD_IDS.TIME_SLOT].disabled = false;
+}
+
+function onCloseModal() {
+  store[FIELD_IDS.PREVIEW_MODAL].style.display = "none";
+}
+
+function onSubbmitModal() {
+  window.location.reload();
+}
+
+function onSubbmit(e) {
+  e.preventDefault();
+
+  const formData = new FormData(store[FIELD_IDS.BOOKING_FORM]);
+
+  const data = {
+    [FIELD_IDS.FIRST_NAME]: formData.get(FIELD_IDS.FIRST_NAME),
+    [FIELD_IDS.LAST_NAME]: formData.get(FIELD_IDS.LAST_NAME),
+    [FIELD_IDS.GENDER]: formData.get(FIELD_IDS.GENDER),
+    [FIELD_IDS.BIRTH_DATE]: formData.get(FIELD_IDS.BIRTH_DATE),
+    [FIELD_IDS.AGE]: formData.get(FIELD_IDS.AGE),
+    [FIELD_IDS.EMAIL]: formData.get(FIELD_IDS.EMAIL),
+    [FIELD_IDS.PHONE_CODE]: formData.get(FIELD_IDS.PHONE_CODE),
+    [FIELD_IDS.PHONE]: formData.get(FIELD_IDS.PHONE),
+    [FIELD_IDS.SPORT]: formData.get(FIELD_IDS.SPORT),
+    [FIELD_IDS.FACILITY]: formData.get(FIELD_IDS.FACILITY),
+    [FIELD_IDS.TIME_SLOT]: formData.get(FIELD_IDS.TIME_SLOT),
+    [FIELD_IDS.PARTICIPANTS]: formData.get(FIELD_IDS.PARTICIPANTS) || "1",
+    [FIELD_IDS.PAYMENT]: formData.get(FIELD_IDS.PAYMENT),
+    [FIELD_IDS.COMPANY_NAME]: formData.get(FIELD_IDS.COMPANY_NAME) || "",
+    [FIELD_IDS.ICO]: formData.get(FIELD_IDS.ICO) || "",
+    [FIELD_IDS.EQUIPMENT]: formData.getAll(FIELD_IDS.EQUIPMENT),
+    [FIELD_IDS.EQUIP_OTHER_TEXT]:
+      formData.get(FIELD_IDS.EQUIP_OTHER_TEXT) || "",
+    [FIELD_IDS.NOTES]: formData.get(FIELD_IDS.NOTES) || "",
+  };
+
+  let error = false;
+
+  for (const field of REQUIRED_FIELDS_IDS) {
+    if (!data[field]) {
+      document.getElementById(getErrorId(field)).innerText =
+        ERROR_MESSAGES.REQUIRED;
+
+      error = true;
+    }
+  }
+
+  const emailError = document.getElementById(getErrorId(FIELD_IDS.EMAIL));
+  if (!document.getElementById(getErrorId(FIELD_IDS.EMAIL)).innerText) {
+    if (!validateEmail(data[FIELD_IDS.EMAIL])) {
+      emailError.innerText = ERROR_MESSAGES.INVALID_EMAIL;
+      error = true;
+    }
+  }
+
+  const ageError = document.getElementById(getErrorId(FIELD_IDS.AGE));
+  if (!document.getElementById(getErrorId(FIELD_IDS.AGE)).innerText) {
+    if (
+      !validateAgeBirthDate(data[FIELD_IDS.BIRTH_DATE], data[FIELD_IDS.AGE])
+    ) {
+      ageError.innerText = ERROR_MESSAGES.AGE_MISMATCH;
+      error = true;
+    }
+  }
+
+  const phoneError = document.getElementById(getErrorId(FIELD_IDS.PHONE));
+  if (!document.getElementById(getErrorId(FIELD_IDS.PHONE)).innerText) {
+    if (!validatePhone(data[FIELD_IDS.PHONE])) {
+      phoneError.innerText = ERROR_MESSAGES.INVALID_PHONE;
+      error = true;
+    }
+  }
+
+  if (!error) {
+    store[FIELD_IDS.SUMMARY_DITAILS].innerHTML = Object.keys(data).reduce(
+      (html, key) => `${html}<span>${key}: ${data[key]}</span>`,
+      "",
+    );
+
+    let price =
+      SPORT_DATA[data[FIELD_IDS.SPORT]].facilities[data[FIELD_IDS.FACILITY]]
+        .price * parseInt(data[FIELD_IDS.PARTICIPANTS]);
+
+    if (data[FIELD_IDS.EQUIP_BALL]) {
+      price += 5;
+    }
+
+    if (data[FIELD_IDS.EQUIP_SHOES]) {
+      price += 10;
+    }
+
+    store[FIELD_IDS.SUMMARY_CONTENT].innerHTML = `<h5>Price: ${price}</h5>`;
+
+    store[FIELD_IDS.PREVIEW_MODAL].style.display = "";
+  }
+}
+
+function initHandlers() {
+  store[FIELD_IDS.SPORT].addEventListener("change", () => {
+    onChangeSport();
+    onChangeFacility();
+  });
+  store[FIELD_IDS.FACILITY].addEventListener("change", () => {
+    onChangeFacility();
+  });
+
+  for (const field of REQUIRED_FIELDS_IDS) {
+    store[field].addEventListener("input", () => onChangeRequired(field));
+  }
+
+  store[FIELD_IDS.FIRST_NAME].addEventListener("input", () =>
+    onChangeCount(FIELD_IDS.FIRST_NAME_COUNTER, FIELD_IDS.FIRST_NAME, 50),
+  );
+
+  store[FIELD_IDS.LAST_NAME].addEventListener("input", () =>
+    onChangeCount(FIELD_IDS.LAST_NAME_COUNTER, FIELD_IDS.LAST_NAME, 50),
+  );
+
+  store[FIELD_IDS.PHONE].addEventListener("input", () =>
+    onChangeCount(FIELD_IDS.PHONE_COUNTER, FIELD_IDS.PHONE, 15),
+  );
+
+  store[FIELD_IDS.EQUIP_OTHER].addEventListener("change", onChangeEquipOther);
+  store[FIELD_IDS.EQUIP_OTHER_TEXT].addEventListener("input", () =>
+    onChangeCount(
+      FIELD_IDS.EQUIP_OTHER_TEXT_COUNTER,
+      FIELD_IDS.EQUIP_OTHER_TEXT,
+      150,
+    ),
+  );
+
+  store[FIELD_IDS.NOTES].addEventListener("input", () =>
+    onChangeCount(FIELD_IDS.NOTES_COUNTER, FIELD_IDS.NOTES, 500),
+  );
+
+  store[FIELD_IDS.BOOKING_FORM].addEventListener("submit", onSubbmit);
+
+  store[FIELD_IDS.SHOW_HIDDEN_BTN].addEventListener("click", onClickHiddenBtn);
+  store[FIELD_IDS.CLOSE_MODAL].addEventListener("click", onCloseModal);
+  store[FIELD_IDS.CANCEL_SUBMIT].addEventListener("click", onCloseModal);
+  store[FIELD_IDS.CONFIRM_SUBMIT].addEventListener("click", onSubbmitModal);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initStore();
+  initFields();
+  initHandlers();
+});

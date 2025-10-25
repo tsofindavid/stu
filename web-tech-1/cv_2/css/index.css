@@ -42,14 +42,14 @@
 }
 
 @font-face {
-    font-family: 'Roboto Black Italic';
-    src: url('../assets/Roboto-BlackItalic.ttf') format('truetype');
+    font-family: "Roboto Black Italic";
+    src: url("../asserts/Roboto-BlackItalic.ttf") format("truetype");
     font-weight: 900;
     font-style: italic;
 }
 
 * {
-    font-family: 'Roboto Black Italic', Arial, sans-serif;
+    font-family: "Roboto Black Italic", Arial, sans-serif;
 }
 
 body {

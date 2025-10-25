@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>David Tsofin pis_1</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="background-rectangle">
+                <div class="resizable-rectangle">
+                    <div class="resize-handle">
+                        <div class="container">
+                            <div class="tulip">
+                                <div class="tulip-petals">
+                                    <div class="tulip-petal"></div>
+                                    <div class="tulip-petal"></div>
+                                    <div class="tulip-petal"></div>
+                                </div>
+                                <div class="tulip-bud"></div>
+
+                                <div class="tulip-leaves">
+                                    <div class="tulip-leaf"></div>
+                                    <div class="tulip-leaf"></div>
+                                </div>
+                                <div class="tulip-stem"></div>
+                            </div>
+
+                            <div class="bee-container">
+                                <div class="bee-body">
+                                    <div class="bee-stinger"></div>
+                                </div>
+                                <div class="bee-wings">
+                                    <div class="bee-wing-r"></div>
+                                    <div class="bee-wing-l"></div>
+                                </div>
+                            </div>
+
+                            <div class="tulip">
+                                <div class="tulip-petals">
+                                    <div class="tulip-petal"></div>
+                                    <div class="tulip-petal"></div>
+                                    <div class="tulip-petal"></div>
+                                </div>
+                                <div class="tulip-bud"></div>
+
+                                <div class="tulip-leaves">
+                                    <div class="tulip-leaf"></div>
+                                    <div class="tulip-leaf"></div>
+                                </div>
+                                <div class="tulip-stem"></div>
+                            </div>
+
+                            <div class="bee-container">
+                                <div class="bee-body">
+                                    <div class="bee-stinger"></div>
+                                </div>
+                                <div class="bee-wings">
+                                    <div class="bee-wing-r"></div>
+                                    <div class="bee-wing-l"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50%;
+            padding: 5%;
+            flex-direction: column;
+        }
+
+        .background-rectangle {
+            width: 100%;
+            height: 600px;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .resizable-rectangle {
+            width: 50%;
+            height: 300px;
+            max-width: 100%;
+            max-height: 600px;
+            background: linear-gradient(180deg, skyblue, #34eb8c);
+            position: relative;
+            cursor: move;
+            min-width: 200px;
+            min-height: 120px;
+            resize: both;
+            overflow: auto;
+        }
+
+        .resize-handle {
+            cursor: se-resize;
+        }
+
+        .container {
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            width: 100%;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .tulip {
+            width: 100px;
+            height: 200px;
+            margin: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .tulip-stem {
+            width: 10px;
+            height: 120px;
+            background-color: green;
+            border-radius: 5px;
+            margin-top: auto;
+        }
+
+        .tulip-bud {
+            width: 90px;
+            height: 55px;
+            background-color: pink;
+            border-radius: 0 0 90px 90px;
+        }
+
+        .tulip-petals {
+            display: flex;
+            justify-content: center;
+            top: 30px;
+        }
+
+        .tulip-petal {
+            width: 30px;
+            height: 30px;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid pink;
+            margin: 0 -5px;
+        }
+
+        .tulip-leaves {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: absolute;
+            bottom: 50px;
+        }
+
+        .tulip-leaf {
+            width: 50px;
+            height: 50px;
+            background-color: green;
+            border-radius: 100% 0% 100% 0%;
+        }
+
+        .tulip:hover .tulip-bud {
+            background-color: #ff5fa2;
+        }
+
+        .tulip:hover .tulip-petal {
+            border-bottom-color: #ff5fa2;
+        }
+
+        .bee-container {
+            width: 100px;
+            height: 200px;
+            margin: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .bee-body {
+            width: 120px;
+            height: 80px;
+            background: yellow;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset 0 0 0 5px black;
+        }
+
+        .bee-stinger {
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 20px solid black;
+        }
+
+        .bee-wings {
+            position: absolute;
+            top: 5px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .bee-wing-l {
+            width: 30px;
+            height: 60px;
+            background-color: lightblue;
+            border-radius: 50% 50% 0 0;
+            transform: rotate(20deg);
+            opacity: 0.8;
+        }
+
+        .bee-wing-r {
+            width: 30px;
+            height: 60px;
+            background-color: lightblue;
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-20deg);
+            opacity: 0.8;
+        }
+
+        .bee-wing:nth-child(2) {
+            transform: rotate(-20deg);
+        }
+
+        .bee-container:hover {
+            transform: translateY(-50%);
+        }
+    </style>
+</html>

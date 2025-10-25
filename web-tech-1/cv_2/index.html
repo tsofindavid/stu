@@ -1,11 +1,346 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sk">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sports Facility Reservation</title>
+        <link rel="stylesheet" href="css/index.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rezervácia športových priestorov</title>
-    <link rel="stylesheet" href="css/index.css">
+    <body>
+        <header>
+            <h1>Sports Facility Reservation</h1>
+        </header>
+        <div class="form-container">
+            <form id="bookingForm" autocomplete="off" novalidate>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="firstName" class="required"
+                            >First Name</label
+                        >
+                        <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            maxlength="50"
+                            required
+                        />
+                        <div class="char-counter" id="firstNameCounter">
+                            0 / 50
+                        </div>
+                        <div class="error-message" id="firstNameError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName" class="required">Last Name</label>
+                        <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            maxlength="50"
+                            required
+                        />
+                        <div class="char-counter" id="lastNameCounter">
+                            0 / 50
+                        </div>
+                        <div class="error-message" id="lastNameError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender" class="required">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select...</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="error-message" id="genderError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthDate" class="required"
+                            >Birth Date</label
+                        >
+                        <input
+                            type="date"
+                            id="birthDate"
+                            name="birthDate"
+                            required
+                        />
+                        <div class="error-message" id="birthDateError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age" class="required">Age</label>
+                        <input type="number" id="age" name="age" required />
+                        <div class="error-message" id="ageError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            maxlength="100"
+                            required
+                            placeholder="example@domain.com"
+                        />
+                        <div class="char-counter" id="emailCounter">
+                            0 / 100
+                        </div>
+                        <div class="error-message" id="emailError"></div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="phone">Phone Number</label>
+                        <div class="phone-group">
+                            <select id="phoneCode" name="phoneCode">
+                                <option value="+421">+421 (SK)</option>
+                                <option value="+420">+420 (CZ)</option>
+                                <option value="+48">+48 (PL)</option>
+                                <option value="+43">+43 (AT)</option>
+                                <option value="+36">+36 (HU)</option>
+                            </select>
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                maxlength="15"
+                                placeholder="912345678"
+                            />
+                        </div>
+                        <div class="char-counter" id="phoneCounter">0 / 15</div>
+                        <div class="error-message" id="phoneError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sport" class="required">Sport</label>
+                        <select id="sport" name="sport" required>
+                            <option value="">Select sport...</option>
+                        </select>
+                        <div class="error-message" id="sportError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="facility">Facility</label>
+                        <select id="facility" name="facility" disabled>
+                            <option value="">First select sport</option>
+                        </select>
+                        <div class="error-message" id="facilityError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="timeSlot">Time Slot</label>
+                        <select id="timeSlot" name="timeSlot" disabled>
+                            <option value="">First select facility</option>
+                        </select>
+                        <div class="error-message" id="timeSlotError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="participants">Number of People</label>
+                        <input
+                            type="number"
+                            id="participants"
+                            name="participants"
+                            min="1"
+                            max="50"
+                            value="1"
+                        />
+                        <div class="error-message" id="participantsError"></div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Payment Type</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input
+                                    type="radio"
+                                    id="paymentCash"
+                                    name="payment"
+                                    value="cash"
+                                    checked
+                                />
+                                <label for="paymentCash">Cash</label>
+                            </div>
+                            <div class="radio-item">
+                                <input
+                                    type="radio"
+                                    id="paymentCard"
+                                    name="payment"
+                                    value="card"
+                                />
+                                <label for="paymentCard">Card</label>
+                            </div>
+                            <div class="radio-item">
+                                <input
+                                    type="radio"
+                                    id="paymentInvoice"
+                                    name="payment"
+                                    value="invoice"
+                                />
+                                <label for="paymentInvoice">Invoice</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        id="invoiceFields"
+                        class="form-group full-width hidden-field"
+                    >
+                        <h3>Invoice Details</h3>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Equipment Rental</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input
+                                    type="checkbox"
+                                    id="equipBall"
+                                    name="equipment"
+                                    value="ball"
+                                />
+                                <label for="equipBall">Ball (5€)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input
+                                    type="checkbox"
+                                    id="equipShoes"
+                                    name="equipment"
+                                    value="shoes"
+                                />
+                                <label for="equipShoes"
+                                    >Sports Shoes (10€)</label
+                                >
+                            </div>
+                            <div class="checkbox-item">
+                                <input
+                                    type="checkbox"
+                                    id="equipOther"
+                                    name="equipment"
+                                    value="other"
+                                />
+                                <label for="equipOther"
+                                    >Other, please specify</label
+                                >
+                            </div>
+                        </div>
+                        <input
+                            type="text"
+                            id="equipOtherText"
+                            name="equipOtherText"
+                            placeholder="Specify equipment"
+                            class="hidden-field"
+                            maxlength="150"
+                            style="display: none"
+                        />
+                        <div
+                            class="char-counter hidden-field"
+                            id="equipOtherTextCounter"
+                            style="display: none"
+                        >
+                            0 / 150
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="notes">Note</label>
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            rows="4"
+                            maxlength="500"
+                        ></textarea>
+                        <div class="char-counter" id="notesCounter">
+                            0 / 500
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <button
+                            type="button"
+                            class="btn-secondary"
+                            id="showHiddenBtn"
+                        >
+                            Additional Field
+                        </button>
+                        <div
+                            class="form-grid"
+                            id="hiddenField"
+                            style="display: none"
+                        >
+                            <div class="form-group">
+                                <label for="companyName">Company Name</label>
+                                <input
+                                    type="text"
+                                    id="companyName"
+                                    name="companyName"
+                                    maxlength="100"
+                                />
+                                <div
+                                    class="char-counter"
+                                    id="companyNameCounter"
+                                >
+                                    0 / 100
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ico">Business ID</label>
+                                <input
+                                    type="text"
+                                    id="ico"
+                                    name="ico"
+                                    maxlength="20"
+                                />
+                                <div class="char-counter" id="icoCounter">
+                                    0 / 20
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width button-group">
+                        <button type="submit" class="btn">Show Preview</button>
+                        <button type="reset" class="btn btn-secondary">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="previewModal" class="modal" style="display: none">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Order Preview</h2>
+                    <span class="close" id="closeModal">&times;</span>
+                </div>
+                <h5>Summary Ditails</h5>
+                <div id="summaryDitails" class="summary-details"></div>
+                <div id="summaryContent"></div>
+                <div class="button-group">
+                    <button type="button" class="btn" id="confirmSubmit">
+                        Confirm and Submit
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        id="cancelSubmit"
+                    >
+                        Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="scripts/constants.js"></script>
+        <script src="scripts/store.js"></script>
+        <script src="scripts/validate.js"></script>
+        <script src="scripts/utils.js"></script>
+        <script src="scripts/index.js"></script>
+    </body>
     <style>
         .form-container {
             max-width: 900px;
@@ -16,6 +351,7 @@
         }
 
         .form-grid {
+            padding-top: 0.5rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
@@ -109,10 +445,6 @@
             flex: 1;
         }
 
-        .hidden-field {
-            display: none;
-        }
-
         .btn {
             padding: 0.75rem 1.5rem;
             background-color: var(--color-function);
@@ -133,8 +465,11 @@
             border: 1px solid var(--border-color);
         }
 
+        .btn-secondary:hover {
+            background-color: var(--color-keyword);
+        }
+
         .modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -170,11 +505,10 @@
             color: var(--color-error);
         }
 
-        .summary-item {
+        .summary-details {
             display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border-color);
+            flex-direction: column;
+            gap: 5px;
         }
 
         .summary-total {
@@ -199,217 +533,4 @@
             }
         }
     </style>
-</head>
-
-<body>
-    <header>
-        <h1>Rezervácia športových priestorov</h1>
-    </header>
-
-    <div class="form-container">
-        <form id="bookingForm" autocomplete="off" novalidate>
-            <div class="form-grid">
-                <!-- Osobné údaje -->
-                <div class="form-group">
-                    <label for="firstName" class="required">Meno</label>
-                    <input type="text" id="firstName" name="firstName" maxlength="50" required>
-                    <div class="char-counter" id="firstNameCounter">0 / 50</div>
-                    <div class="error-message" id="firstNameError"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastName" class="required">Priezvisko</label>
-                    <input type="text" id="lastName" name="lastName" maxlength="50" required>
-                    <div class="char-counter" id="lastNameCounter">0 / 50</div>
-                    <div class="error-message" id="lastNameError"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="gender" class="required">Pohlavie</label>
-                    <select id="gender" name="gender" required>
-                        <option value="">Vyberte...</option>
-                        <option value="male">Muž</option>
-                        <option value="female">Žena</option>
-                        <option value="other">Iné</option>
-                    </select>
-                    <div class="error-message" id="genderError"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="birthDate" class="required">Dátum narodenia</label>
-                    <input type="date" id="birthDate" name="birthDate" required>
-                    <div class="error-message" id="birthDateError"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="age" class="required">Vek</label>
-                    <input type="number" id="age" name="age" readonly required>
-                    <div class="error-message" id="ageError"></div>
-                </div>
-
-                <!-- Email -->
-                <div class="form-group">
-                    <label for="email" class="required">Email</label>
-                    <input type="email" id="email" name="email" maxlength="100" required
-                        placeholder="example@domain.com">
-                    <div class="char-counter" id="emailCounter">0 / 100</div>
-                    <div class="error-message" id="emailError"></div>
-                </div>
-
-                <!-- Telefón -->
-                <div class="form-group full-width">
-                    <label for="phone">Telefónne číslo</label>
-                    <div class="phone-group">
-                        <select id="phoneCode" name="phoneCode">
-                            <option value="+421">+421 (SK)</option>
-                            <option value="+420">+420 (CZ)</option>
-                            <option value="+48">+48 (PL)</option>
-                            <option value="+43">+43 (AT)</option>
-                            <option value="+36">+36 (HU)</option>
-                        </select>
-                        <input type="tel" id="phone" name="phone" maxlength="15" placeholder="912345678">
-                    </div>
-                    <div class="char-counter" id="phoneCounter">0 / 15</div>
-                    <div class="error-message" id="phoneError"></div>
-                </div>
-
-                <!-- Výber športu -->
-                <div class="form-group">
-                    <label for="sport" class="required">Šport</label>
-                    <select id="sport" name="sport" required>
-                        <option value="">Vyberte šport...</option>
-                        <option value="football">Futbal</option>
-                        <option value="tennis">Tenis</option>
-                        <option value="basketball">Basketbal</option>
-                        <option value="volleyball">Volejbal</option>
-                    </select>
-                    <div class="error-message" id="sportError"></div>
-                </div>
-
-                <!-- Výber priestoru (závislý od športu) -->
-                <div class="form-group">
-                    <label for="facility">Priestor</label>
-                    <select id="facility" name="facility" disabled>
-                        <option value="">Najprv vyberte šport</option>
-                    </select>
-                    <div class="error-message" id="facilityError"></div>
-                </div>
-
-                <!-- Výber času (závislý od priestoru) -->
-                <div class="form-group">
-                    <label for="timeSlot">Časový slot</label>
-                    <select id="timeSlot" name="timeSlot" disabled>
-                        <option value="">Najprv vyberte priestor</option>
-                    </select>
-                    <div class="error-message" id="timeSlotError"></div>
-                </div>
-
-                <!-- Počet osôb -->
-                <div class="form-group">
-                    <label for="participants">Počet osôb</label>
-                    <input type="number" id="participants" name="participants" min="1" max="50" value="1">
-                    <div class="error-message" id="participantsError"></div>
-                </div>
-
-                <!-- Typ platby (radio) -->
-                <div class="form-group full-width">
-                    <label>Typ platby</label>
-                    <div class="radio-group">
-                        <div class="radio-item">
-                            <input type="radio" id="paymentCash" name="payment" value="cash" checked>
-                            <label for="paymentCash">Hotovosť</label>
-                        </div>
-                        <div class="radio-item">
-                            <input type="radio" id="paymentCard" name="payment" value="card">
-                            <label for="paymentCard">Karta</label>
-                        </div>
-                        <div class="radio-item">
-                            <input type="radio" id="paymentInvoice" name="payment" value="invoice">
-                            <label for="paymentInvoice">Faktúra</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Fakturačné údaje (skryté, zobrazí sa pri výbere faktúry) -->
-                <div id="invoiceFields" class="form-group full-width hidden-field">
-                    <h3>Fakturačné údaje</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="companyName">Názov spoločnosti</label>
-                            <input type="text" id="companyName" name="companyName" maxlength="100">
-                            <div class="char-counter" id="companyNameCounter">0 / 100</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="ico">IČO</label>
-                            <input type="text" id="ico" name="ico" maxlength="20">
-                            <div class="char-counter" id="icoCounter">0 / 20</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Výber vybavenia (checkbox s možnosťou "iné") -->
-                <div class="form-group full-width">
-                    <label>Požičanie vybavenia</label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="equipBall" name="equipment" value="ball">
-                            <label for="equipBall">Lopta (5€)</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="equipShoes" name="equipment" value="shoes">
-                            <label for="equipShoes">Športová obuv (10€)</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="equipOther" name="equipment" value="other">
-                            <label for="equipOther">Iné, uveďte aké</label>
-                        </div>
-                    </div>
-                    <input type="text" id="equipOtherText" name="equipOtherText" placeholder="Špecifikujte vybavenie"
-                        class="hidden-field" maxlength="100">
-                    <div class="char-counter hidden-field" id="equipOtherTextCounter">0 / 100</div>
-                </div>
-
-                <!-- Poznámka (textarea) -->
-                <div class="form-group full-width">
-                    <label for="notes">Poznámka</label>
-                    <textarea id="notes" name="notes" rows="4" maxlength="500"></textarea>
-                    <div class="char-counter" id="notesCounter">0 / 500</div>
-                </div>
-
-                <!-- Skryté pole -->
-                <div class="form-group full-width">
-                    <button type="button" class="btn-secondary" id="showHiddenBtn">
-                        Zobraziť skryté pole
-                    </button>
-                    <input type="text" id="hiddenField" name="hiddenField" value="David Tsofin" class="hidden-field"
-                        readonly>
-                </div>
-
-                <!-- Tlačidlá -->
-                <div class="form-group full-width button-group">
-                    <button type="submit" class="btn">Zobraziť náhľad</button>
-                    <button type="reset" class="btn btn-secondary">Vymazať</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <!-- Modal pre náhľad -->
-    <div id="previewModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Náhľad objednávky</h2>
-                <span class="close" id="closeModal">&times;</span>
-            </div>
-            <div id="summaryContent"></div>
-            <div class="button-group">
-                <button type="button" class="btn" id="confirmSubmit">Potvrdiť a odoslať</button>
-                <button type="button" class="btn btn-secondary" id="cancelSubmit">Upraviť</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/form.js"></script>
-</body>
-
 </html>

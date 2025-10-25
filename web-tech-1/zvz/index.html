@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SVG Game</title>
+        <style>
+            .game-container {
+                width: 100%;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
+
+            svg {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #ccc;
+                background: #f0f0f0;
+            }
+
+            .draggable {
+                cursor: move;
+                transition: all 0.2s;
+            }
+
+            .draggable:hover {
+                filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+            }
+
+            .drop-zone {
+                fill: rgba(255, 255, 255, 0.5);
+                stroke: #666;
+                stroke-dasharray: 5, 5;
+            }
+
+            .drop-zone.valid {
+                stroke: green;
+            }
+
+            .drop-zone.invalid {
+                stroke: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="game-container">
+            <svg
+                id="gameSvg"
+                viewBox="0 0 800 600"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <!-- Game elements will be dynamically added here -->
+            </svg>
+        </div>
+        <script src="scripts/index.js"></script>
+    </body>
+</html>
