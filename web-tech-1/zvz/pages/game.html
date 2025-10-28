@@ -56,7 +56,7 @@
         <script src="../scripts/board.js"></script>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", () => {
                 const grid = document.getElementById("gameGrid");
                 const resetBtn = document.getElementById("resetBtn");
                 const backBtn = document.getElementById("backBtn");
@@ -115,7 +115,7 @@
                     board.reset();
                 });
 
-                backBtn.addEventListener("click", function () {
+                backBtn.addEventListener("click", () => {
                     window.location.href = "../index.html";
                 });
             });
@@ -217,13 +217,11 @@
         }
 
         .mountain {
-            /*background-color: var(--color-warning);*/
             position: relative;
         }
 
         .mountain::after {
             content: "⛰︎";
-            /*color: var(--bg-primary);*/
             font-size: 2rem;
         }
 

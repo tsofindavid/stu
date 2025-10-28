@@ -1,0 +1,122 @@
+@startuml Bike_Sharing_System_Use_Case_Diagram
+
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+
+actor "Customer" as customer
+actor "Administrator" as admin
+actor "Payment System" as payment <<external>>
+
+rectangle "Bike Sharing System" {
+
+    package "Customer Management" {
+        usecase "Register Account\n(FR-1)" as UC1
+        usecase "Login to System" as UC2
+        usecase "Manage Profile" as UC3
+    }
+
+    package "Bike Rental" {
+        usecase "Search Available Bikes\n(FR-2)" as UC4
+        usecase "View Bike Details" as UC5
+        usecase "Rent Bike\n(FR-3)" as UC6
+        usecase "Scan QR Code" as UC7
+        usecase "Unlock Bike" as UC8
+        usecase "Return Bike\n(FR-4)" as UC9
+        usecase "Lock Bike at Station" as UC10
+    }
+
+    package "Payment & History" {
+        usecase "Process Payment\n(FR-5)" as UC11
+        usecase "Calculate Rental Cost\n(FR-5)" as UC12
+        usecase "View Rental History\n(FR-6)" as UC13
+        usecase "View Current Tariff" as UC14
+    }
+
+    package "Notifications" {
+        usecase "Receive Notifications\n(FR-10)" as UC15
+        usecase "Send Rental Confirmation" as UC16
+        usecase "Send Promotional Messages" as UC17
+    }
+
+    package "Administration" {
+        usecase "Manage Tariffs\n(FR-7)" as UC18
+        usecase "Create Pricing Plan" as UC19
+        usecase "Modify Pricing Plan" as UC20
+        usecase "Track Maintenance\n(FR-8)" as UC21
+        usecase "Generate Maintenance Alert" as UC22
+        usecase "Schedule Bike Service" as UC23
+        usecase "Monitor Bikes\n(FR-9)" as UC24
+        usecase "View Bike Location" as UC25
+        usecase "Check Bike Status" as UC26
+        usecase "View System Reports" as UC27
+        usecase "Manage Bike Fleet" as UC28
+        usecase "Manage Stations" as UC29
+    }
+}
+
+customer --> UC1
+customer --> UC2
+customer --> UC3
+customer --> UC4
+customer --> UC5
+customer --> UC6
+customer --> UC9
+customer --> UC13
+customer --> UC14
+customer --> UC15
+
+admin --> UC18
+admin --> UC21
+admin --> UC23
+admin --> UC24
+admin --> UC27
+admin --> UC28
+admin --> UC29
+
+payment --> UC11
+
+UC1 ..> UC2 : <<include>>
+UC6 ..> UC7 : <<include>>
+UC6 ..> UC8 : <<include>>
+UC9 ..> UC10 : <<include>>
+UC9 ..> UC12 : <<include>>
+UC9 ..> UC11 : <<include>>
+UC18 ..> UC19 : <<include>>
+UC18 ..> UC20 : <<include>>
+UC21 ..> UC22 : <<include>>
+
+UC4 ..> UC5 : <<extend>>
+UC6 ..> UC14 : <<extend>>
+UC11 ..> UC16 : <<extend>>
+UC15 ..> UC16 : <<extend>>
+UC15 ..> UC17 : <<extend>>
+UC24 ..> UC25 : <<extend>>
+UC24 ..> UC26 : <<extend>>
+
+UC19 --|> UC18
+UC20 --|> UC18
+
+note right of UC6
+  Requires age verification
+  (DR-2: minimum 16 years)
+end note
+
+note right of UC11
+  Must comply with
+  security standards
+  (NFR-3)
+end note
+
+note right of UC22
+  Automatic alerts at:
+  - 500 km: check brakes
+  - 1000 km: full inspection
+end note
+
+note bottom of UC1
+  Requires: email, phone,
+  payment method
+  Must comply with GDPR (DR-3)
+end note
+
+@enduml

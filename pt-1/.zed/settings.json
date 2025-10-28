@@ -1,4 +1,8 @@
 {
+  "format_on_save": "on",
+  "indent_guides": {
+    "line_width": 140
+  },
   "lsp": {
     "clangd": {
       "fetch": {

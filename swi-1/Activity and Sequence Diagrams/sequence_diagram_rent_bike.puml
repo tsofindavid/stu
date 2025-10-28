@@ -1,0 +1,51 @@
+@startuml Sequence_Diagram_Rent_Bike
+
+title Sequence Diagram - UC-3: Rent Bike (FR-3)
+
+actor Customer
+participant "Mobile App" as App
+participant "Backend API" as Backend
+database Database
+participant "Bike Lock" as Lock
+
+Customer -> App: Navigate to selected bike
+Customer -> App: Tap "Rent Bike" button
+
+App -> Backend: Request tariff info
+Backend -> Database: Get current tariff
+Database --> Backend: Tariff details
+Backend --> App: Display tariff
+App --> Customer: Show tariff information
+
+Customer -> App: Confirm rental
+
+App -> Backend: Verify customer account
+Backend -> Database: Check account & payment method
+Database --> Backend: Account valid
+
+App -> Backend: Open QR scanner
+App --> Customer: Display QR scanner
+
+Customer -> App: "Scan bike's" QR code
+App -> Backend: Verify bike (QR code)
+
+Backend -> Database: Check bike availability
+Database --> Backend: Bike available
+
+Backend -> Lock: Send unlock command
+Lock --> Backend: Lock opened
+
+Backend -> Database: Create rental record\nStart rental timer
+Database --> Backend: Rental created
+
+Backend --> App: Rental confirmation
+App --> Customer: Display confirmation\n"Bike unlocked, rental started"
+
+note right of Customer
+  Bike is unlocked and
+  assigned to customer
+  Rental timer is running
+  Bike status: "in use"
+end note
+
+@enduml

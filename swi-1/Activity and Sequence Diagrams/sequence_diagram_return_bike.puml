@@ -1,0 +1,57 @@
+@startuml Sequence_Diagram_Return_Bike
+
+title Sequence Diagram - UC-4: Return Bike (FR-4)
+
+actor Customer
+participant "Mobile App" as App
+participant "Backend API" as Backend
+database Database
+participant "Bike Lock" as Lock
+participant "Payment System" as Payment
+participant "SMS Service" as SMS
+
+Customer -> Customer: Ride bike to station
+
+Customer -> Lock: Lock bike at station dock
+
+Lock -> Backend: Lock closed signal
+
+Backend -> Database: Verify lock status
+Database --> Backend: Lock confirmed
+
+Backend -> Database: Stop rental timer
+Database --> Backend: Timer stopped
+
+Backend -> Database: Get rental duration
+Database --> Backend: Duration data
+
+Backend -> Database: Get applicable tariff
+Database --> Backend: Tariff details
+
+Backend -> Backend: Calculate rental cost\n(time + tariff)
+
+Backend -> Payment: Process payment request
+Payment -> Payment: Charge customer
+Payment --> Backend: Payment confirmed
+
+Backend -> Database: Update bike status\nto "available"
+Database --> Backend: Status updated
+
+Backend -> Database: Save rental record\nto history
+Database --> Backend: Record saved
+
+Backend -> SMS: Send rental confirmation\nwith receipt
+SMS --> Customer: SMS/Email received
+
+Backend --> App: Rental completed
+App --> Customer: Show confirmation\nand receipt
+
+note right of Customer
+  Postconditions:
+  - Rental is ended
+  - Payment is processed
+  - Bike is available
+  - Rental saved in history
+end note
+
+@enduml

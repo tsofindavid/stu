@@ -1,0 +1,47 @@
+@startuml Rent_Bike_Sequence_Diagram
+
+actor Customer
+participant "Mobile App" as App
+participant "System" as System
+participant "Bike" as Bike
+participant "Payment System" as Payment
+database "Database" as DB
+
+Customer -> App: Open app
+Customer -> App: Search bikes
+App -> System: Request available bikes
+System -> DB: Query available bikes
+DB --> System: Return bike list
+System --> App: Display bikes on map
+
+Customer -> App: Select bike
+Customer -> App: Tap "Rent Bike"
+App -> System: Request tariff info
+System -> DB: Get current tariff
+DB --> System: Return tariff
+System --> App: Display tariff
+
+Customer -> App: Confirm rental
+App -> Customer: Open QR scanner
+Customer -> App: Scan QR code
+App -> System: Validate QR code
+
+System -> DB: Check bike availability
+DB --> System: Bike available
+
+System -> Payment: Validate payment method
+Payment --> System: Payment method valid
+
+System -> Bike: Send unlock command
+Bike --> System: Bike unlocked
+
+System -> DB: Create rental record
+System -> DB: Update bike status
+System -> DB: Start rental timer
+
+System --> App: Rental confirmation
+App --> Customer: Display confirmation
+
+System -> Customer: Send notification (email/SMS)
+
+@enduml

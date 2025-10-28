@@ -1,0 +1,54 @@
+@startuml Rent_Bike_Activity_Diagram
+
+title Activity Diagram - Rent Bike Process
+
+start
+
+:Customer opens app;
+
+:Search available bikes;
+
+if (Bikes available nearby?) then (yes)
+  :View bike on map;
+  :Select bike;
+  :Tap "Rent Bike" button;
+  :View current tariff;
+  
+  if (Customer confirms rental?) then (yes)
+    :Open QR scanner;
+    :Scan bike QR code;
+    
+    if (QR code valid?) then (yes)
+      if (Bike available?) then (yes)
+        if (Payment method valid?) then (yes)
+          :Unlock bike;
+          :Start rental timer;
+          :Display rental confirmation;
+          :Send notification to customer;
+          stop
+        else (no)
+          :Display payment error;
+          :Prompt to update payment method;
+          stop
+        endif
+      else (no)
+        :Display "Bike already rented";
+        :Suggest alternative bikes;
+        stop
+      endif
+    else (no)
+      :Display scan error;
+      :Allow manual bike ID entry;
+      stop
+    endif
+  else (no)
+    :Cancel rental;
+    stop
+  endif
+else (no)
+  :Display "No bikes nearby";
+  :Show nearest available bikes;
+  stop
+endif
+
+@enduml

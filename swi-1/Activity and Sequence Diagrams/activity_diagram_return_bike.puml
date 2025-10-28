@@ -1,0 +1,31 @@
+@startuml Activity_Diagram_Return_Bike
+
+title Activity Diagram - UC-4: Return Bike (FR-4)
+
+start
+
+:Customer rides bike to any station;
+  if (Bike properly locked?) then (yes)
+    :System stops rental timer;
+    :System calculates rental cost based on time and tariff;
+    :System processes payment automatically;
+
+    if (Payment successful?) then (yes)
+      :System updates bike status to "available";
+      :System sends rental confirmation with receipt to customer;
+      :System updates "customer's" rental history;
+      stop
+    else (no)
+      :System retries payment;
+      :System notifies customer;
+      :Rental marked as pending payment;
+      stop
+    endif
+
+  else (no)
+    :System sends notification to customer;
+    note right: Rental timer continues\nuntil properly locked
+    stop
+  endif
+
+@enduml

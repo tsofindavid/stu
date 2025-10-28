@@ -1,0 +1,26 @@
+@startuml Activity_Diagram_Rent_Bike
+
+title Activity Diagram - UC-3: Rent Bike (FR-3)
+
+start
+
+:Customer navigates to selected bike;
+:Customer taps "Rent Bike" button;
+:System displays current tariff information;
+:Customer confirms rental;
+:System opens QR code scanner;
+:Customer scans bike's QR code;
+:System verifies bike availability;
+
+if (Bike available?) then (yes)
+  :System unlocks the bike;
+  :System starts rental timer;
+  :System displays rental confirmation;
+  stop
+else (no)
+  :System displays error;
+  :System suggests alternative bikes;
+  stop
+endif
+
+@enduml

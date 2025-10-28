@@ -1,0 +1,129 @@
+@startuml Bike_Sharing_Class_Diagram
+
+title Bike Sharing System - Class Diagram
+
+skinparam classAttributeIconSize 0
+
+class Customer {
+  - customerId: int
+  - email: string
+  - phone: string
+  - age: int
+  - registrationDate: date
+  - paymentMethod: string
+  + register()
+  + login()
+  + searchBikes()
+  + rentBike()
+  + returnBike()
+  + viewHistory()
+}
+
+class Administrator {
+  - adminId: int
+  - email: string
+  - name: string
+  + manageTariffs()
+  + trackMaintenance()
+  + monitorBikes()
+  + generateReports()
+  + manageBikeFleet()
+  + manageStations()
+}
+
+class Bike {
+  - bikeId: int
+  - qrCode: string
+  - status: string
+  - batteryLevel: int
+  - totalDistance: int
+  - lastMaintenanceDate: date
+  - location: GPS
+  + unlock()
+  + lock()
+  + updateLocation()
+  + checkStatus()
+}
+
+class Station {
+  - stationId: int
+  - name: string
+  - location: GPS
+  - capacity: int
+  - availableSlots: int
+  + addBike()
+  + removeBike()
+  + checkAvailability()
+}
+
+class Rental {
+  - rentalId: int
+  - startTime: datetime
+  - endTime: datetime
+  - duration: int
+  - totalCost: decimal
+  - status: string
+  + startRental()
+  + endRental()
+  + calculateCost()
+}
+
+class Payment {
+  - paymentId: int
+  - amount: decimal
+  - paymentDate: datetime
+  - paymentMethod: string
+  - status: string
+  + processPayment()
+  + generateReceipt()
+  + refund()
+}
+
+class Tariff {
+  - tariffId: int
+  - name: string
+  - baseRate: decimal
+  - weekdayRate: decimal
+  - weekendRate: decimal
+  - dayRate: decimal
+  - nightRate: decimal
+  - freeMinutes: int
+  - effectiveDate: date
+  + calculatePrice()
+  + applyDiscount()
+}
+
+class Maintenance {
+  - maintenanceId: int
+  - scheduledDate: date
+  - completedDate: date
+  - type: string
+  - description: string
+  - status: string
+  + scheduleService()
+  + completeService()
+  + generateAlert()
+}
+
+class Notification {
+  - notificationId: int
+  - type: string
+  - message: string
+  - sentDate: datetime
+  - status: string
+  + sendEmail()
+  + sendSMS()
+}
+
+Customer "1" -- "0..*" Rental : makes
+Administrator "1" -- "0..*" Tariff : manages
+Administrator "1" -- "0..*" Maintenance : schedules
+Bike "1" -- "0..*" Rental : used in
+Bike "0..*" -- "1" Station : parked at
+Rental "1" -- "1" Payment : generates
+Rental "1" -- "1" Tariff : applies
+Bike "1" -- "0..*" Maintenance : requires
+Customer "1" -- "0..*" Notification : receives
+Rental "1" -- "0..*" Notification : triggers
+
+@enduml
